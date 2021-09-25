@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ASP.NET_Core_The_Studio.Data.Migrations
+namespace ASP.NET_Core_The_Studio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210924090722_eBookRelationWithUser")]
-    partial class eBookRelationWithUser
+    [Migration("20210925091544_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,22 +152,32 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                     b.ToTable("ElectronicBooks");
                 });
 
-            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.Test", b =>
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.ElectronicBookGener", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ElectronicBookId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<byte[]>("Data")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("GenerId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("fileExtension")
+                    b.HasKey("ElectronicBookId", "GenerId");
+
+                    b.HasIndex("GenerId");
+
+                    b.ToTable("ElectronicBookGeners");
+                });
+
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.Gener", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests");
+                    b.ToTable("Geners");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -322,6 +332,25 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.ElectronicBookGener", b =>
+                {
+                    b.HasOne("ASP.NET_Core_The_Studio.Data.Entities.ElectronicBook", "ElectronicBook")
+                        .WithMany("ElectronicBookGener")
+                        .HasForeignKey("ElectronicBookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASP.NET_Core_The_Studio.Data.Entities.Gener", "Gener")
+                        .WithMany("ElectronicBookGener")
+                        .HasForeignKey("GenerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ElectronicBook");
+
+                    b.Navigation("Gener");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -371,6 +400,16 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.ElectronicBook", b =>
+                {
+                    b.Navigation("ElectronicBookGener");
+                });
+
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.Gener", b =>
+                {
+                    b.Navigation("ElectronicBookGener");
                 });
 #pragma warning restore 612, 618
         }

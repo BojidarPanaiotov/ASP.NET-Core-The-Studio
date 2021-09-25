@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ASP.NET_Core_The_Studio.Data.Migrations
+namespace ASP.NET_Core_The_Studio.Migrations
 {
-    public partial class _001InitialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,20 +47,27 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ElectronicBooks",
+                name: "BookRarities",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Author = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    BookCoverImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(110)", maxLength: 110, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ElectronicBooks", x => x.Id);
+                    table.PrimaryKey("PK_BookRarities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Geners",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Geners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,6 +176,64 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ElectronicBooks",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Author = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Pages = table.Column<int>(type: "int", nullable: false),
+                    CopySold = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BookRarityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BookCoverImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(110)", maxLength: 110, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElectronicBooks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ElectronicBooks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ElectronicBooks_BookRarities_BookRarityId",
+                        column: x => x.BookRarityId,
+                        principalTable: "BookRarities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ElectronicBookGeners",
+                columns: table => new
+                {
+                    ElectronicBookId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    GenerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElectronicBookGeners", x => new { x.ElectronicBookId, x.GenerId });
+                    table.ForeignKey(
+                        name: "FK_ElectronicBookGeners_ElectronicBooks_ElectronicBookId",
+                        column: x => x.ElectronicBookId,
+                        principalTable: "ElectronicBooks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ElectronicBookGeners_Geners_GenerId",
+                        column: x => x.GenerId,
+                        principalTable: "Geners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -207,6 +272,21 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ElectronicBookGeners_GenerId",
+                table: "ElectronicBookGeners",
+                column: "GenerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ElectronicBooks_BookRarityId",
+                table: "ElectronicBooks",
+                column: "BookRarityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ElectronicBooks_UserId",
+                table: "ElectronicBooks",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -227,13 +307,22 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ElectronicBooks");
+                name: "ElectronicBookGeners");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "ElectronicBooks");
+
+            migrationBuilder.DropTable(
+                name: "Geners");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BookRarities");
         }
     }
 }

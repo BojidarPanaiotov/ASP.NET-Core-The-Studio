@@ -97,7 +97,8 @@
                 <h5 class="card-title">@eBook.Title</h5>
                 <p class="card-text text-truncate">Description: @eBook.Description</p>
                 <p class="card-text">Author: @eBook.Author</p>
-                <p class="card-text">Pages: @eBook.BookRarity.Name</p>
+                <p class="card-text">CopySold: @eBook.CopySold</p>
+                <p class="card-text">Rarity: @eBook.BookRarity.Name</p>
                 <a href="#" class="btn btn-primary mb-3">Buy for @eBook.Price BGN</a>
             </div>
         </div>
@@ -105,16 +106,5 @@
 </div>
 
 <script>
-    let searchBar = document.getElementById('searchBar');
-
-    searchBar.addEventListener('keyup', () => {
-        if (searchBar.value.length > 2) {
-            console.log('eventa raboti');
-        }
-
-    });
-
-    fetch('api/electronicBooks/categories')
-        .then(res => res.json())
-        .then(data => console.log(data));
+    
 </script>
