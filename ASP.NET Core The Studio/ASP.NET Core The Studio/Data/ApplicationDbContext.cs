@@ -12,6 +12,5 @@
         public DbSet<ApplicationUser> ApplicationUsers { get; init; }
         public DbSet<ElectronicBook> ElectronicBooks { get; init; }
         public DbSet<BookRarity> BookRarities { get; init; }
-        public DbSet<Test> Tests { get; init; }
     }
 }
