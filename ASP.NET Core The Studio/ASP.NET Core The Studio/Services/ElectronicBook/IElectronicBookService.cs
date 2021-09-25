@@ -7,7 +7,7 @@
     public interface IElectronicBookService
     {
         //TODO: Consider if this is the best way to built the interface (is there too many generic methods and is it a problem)
-        Task<IEnumerable<T>> GetAll<T>();
+        IEnumerable<T> GetAll<T>();
         Task<IEnumerable<T>> GetAllByAuthor<T>(string authorName);
         Task<IEnumerable<T>> GetAllByCategory<T>();
         IEnumerable<T> GetAllCategoires<T>();

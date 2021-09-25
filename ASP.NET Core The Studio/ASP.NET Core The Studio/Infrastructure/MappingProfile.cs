@@ -8,6 +8,7 @@
         public MappingProfile()
         {
             CreateMap<ElectronicBook, ElectronicBookViewModel>();
+            CreateMap<ElectronicBook, ElectronicBook>();
         }
     }
 }

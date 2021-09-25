@@ -60,8 +60,8 @@
         }
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> All()
-            =>View(await this.electronicBookService.GetAll<ElectronicBookViewModel>());
+        public IActionResult All()
+            =>View(this.electronicBookService.GetAll<ElectronicBookViewModel>());
         
 
         [Authorize]

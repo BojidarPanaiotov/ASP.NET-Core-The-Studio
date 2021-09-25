@@ -66,11 +66,11 @@
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
-            => await this.context
+        public IEnumerable<T> GetAll<T>()
+            => this.context
                 .ElectronicBooks
                 .ProjectTo<T>(this.mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToList();
         //TODO: Probably there is better approach  
         public async Task<IEnumerable<T>> GetAllByAuthor<T>(string authorName)
             => await this.context

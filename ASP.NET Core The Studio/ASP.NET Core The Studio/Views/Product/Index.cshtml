@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<ElectronicBook>
+
+@{
     ViewData["Title"] = "eBooks";
 }
 <h1 class="text-center text-justify mb-5">Welcome to our eBook world</h1>
@@ -87,95 +89,19 @@
 </div>
 
 <div class="row mt-5">
-    <div class="card ml-4 mb-4" style="width: 13rem;">
-        <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Horror Story</h5>
-            <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-            <p class="card-text">Author: Bojidar</p>
-            <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
+    @foreach (var eBook in Model)
+    {
+        <div class="card ml-4 mb-4" style="width: 13rem;">
+            <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@eBook.Title</h5>
+                <p class="card-text text-truncate">Description: @eBook.Description</p>
+                <p class="card-text">Author: @eBook.Author</p>
+                <p class="card-text">Pages: @eBook.BookRarity.Name</p>
+                <a href="#" class="btn btn-primary mb-3">Buy for @eBook.Price BGN</a>
+            </div>
         </div>
-    </div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-        <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Horror Story</h5>
-            <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-            <p class="card-text">Author: Bojidar</p>
-            <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-        </div>
-    </div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div><div class="card ml-4 mb-4" style="width: 13rem;">
-    <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Horror Story</h5>
-        <p class="card-text text-truncate">Description: lorem ipsm lorem ipsm lorem ipsm ipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsmipsm lorem ipsm lorem ipsm</p>
-        <p class="card-text">Author: Bojidar</p>
-        <a href="#" class="btn btn-primary mb-3">Buy for 3.99 BGN</a>
-    </div>
-</div>
+    }
 </div>
 
 <script>
