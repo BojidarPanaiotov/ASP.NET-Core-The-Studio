@@ -1,6 +1,5 @@
 ﻿namespace ASP.NET_Core_The_Studio.Infrastructure.Extensions
 {
-    using static ASP.NET_Core_The_Studio.Areas.Admin.AdminConstants;
     using ASP.NET_Core_The_Studio.Data;
     using ASP.NET_Core_The_Studio.Data.Entities;
     using Microsoft.AspNetCore.Builder;
@@ -8,8 +7,10 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-    using System.Threading.Tasks;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
+    using static ASP.NET_Core_The_Studio.Areas.Admin.AdminConstants;
 
     public static class ApplicationBuilderExtensions
     {
@@ -24,6 +25,7 @@
             MigrateDatabase(context);
             SeedAdministrator(serviceProvider);
             SeedBookRarity(context, serviceProvider);
+            SeedElectronicBooks(context, serviceProvider);
             return app;
         }
         private static void MigrateDatabase(ApplicationDbContext context)
@@ -80,6 +82,88 @@
             });
 
             context.SaveChangesAsync();
+        }
+        private static void SeedElectronicBooks(ApplicationDbContext context, IServiceProvider services)
+        {
+            if (context.ElectronicBooks.Any())
+            {
+                return;
+            }
+
+            var adminId = context.Users.Where(x => x.Email == "admin@test.com").FirstOrDefault().Id;
+            var eBooks = new List<ElectronicBook>();
+            var booksCount = 30;
+            for (int i = 0; i < booksCount; i++)
+            {
+                var eBook = new ElectronicBook
+                {
+                    Author = SetRandomAuthor(),
+                    CopySold = SetRandomCopySold(),
+                    CreatedOn = DateTime.Now,
+                    BookRarityId = SetRandomBookRarityId(context),
+                    Pages = 0,
+                    Price = SetRandomPriceInRange(1, 50),
+                    BookCoverImage = null,
+                    Data = null,
+                    Title = SetRandomTitle(),
+                    Description = "Lorem ipsumLorem ipsumLorem ipsumLorem ipsum",
+                    UserId = adminId,
+                };
+                eBooks.Add(eBook);
+            }
+
+            context.ElectronicBooks.AddRange(eBooks);
+            context.SaveChanges();
+        }
+        private static string SetRandomBookRarityId(ApplicationDbContext context)
+        {
+            var bookRarities = context.BookRarities.ToList();
+
+            Random rnd = new Random();
+            var randomBookRarityIndex = rnd.Next(0, bookRarities.Count);
+
+            return bookRarities[randomBookRarityIndex].Id;
+        }
+        private static decimal SetRandomPriceInRange(int min,int max)
+        {
+            Random rnd = new Random();
+            rnd.Next(min, max);
+
+            return rnd.Next(min, max); 
+        }
+        private static int SetRandomCopySold()
+        {
+            Random rnd = new Random();
+            return rnd.Next(0, 1000);
+        }
+        private static string SetRandomAuthor()
+        {
+            string[] authors = { 
+                "Bojidar Ivanov",
+                "Petko Ivanov",
+                "Jordan Zankanakar",
+                "Picha Dve",
+                "Tiradjiq Ivanov",
+                "Bojidar Vodafon",
+            };
+            Random rnd = new Random();
+            var radnomIndex  = rnd.Next(0, authors.Length);
+            return authors[radnomIndex];
+        }
+        private static string SetRandomTitle()
+        {
+            string[] titles = {
+                "Horror story",
+                "Freakish",
+                "Z-war",
+                "The last of us",
+                "Tell me acreepy thing",
+            };
+
+            Random rnd = new Random();
+            var radnomIndex = rnd.Next(0, titles.Length);
+
+            return titles[radnomIndex];
         }
     }
 }

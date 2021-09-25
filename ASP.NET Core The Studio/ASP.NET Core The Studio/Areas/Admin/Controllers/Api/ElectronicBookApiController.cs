@@ -5,14 +5,13 @@
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
-
+    using static ASP.NET_Core_The_Studio.Areas.Admin.AdminConstants;
+    //api/electronicBooks/categories
     [Route("api/electronicBooks")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = AdministratorRoleName)]
     public class ElectronicBookApiController : ControllerBase
     {
         private readonly IElectronicBookService electronicBookService;
