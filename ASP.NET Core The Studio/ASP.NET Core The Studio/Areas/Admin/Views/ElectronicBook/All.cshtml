@@ -1,0 +1,34 @@
+﻿@model List<ElectronicBookViewModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Book Id</th>
+                        <th scope="col">Book Title</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                    <tr>
+                        <th scope="row">@item.Title</th>
+                        <td>@item.Author</td>
+                        <td>@item.Price</td>
+                        <td>
+                            <a class="btn btn-primary" asp-area="Admin" asp-controller="ElectronicBook" asp-action="Download" asp-route-id="@item.Id">Download</a>
+                            <a class="btn btn-primary" asp-area="Admin" asp-controller="ElectronicBook" asp-action="Delete" asp-route-id="@item.Id">Remove</a>
+                        </td>
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

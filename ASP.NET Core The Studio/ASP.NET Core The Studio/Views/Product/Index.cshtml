@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "eBooks";
+}
+<h1 class="text-center text-justify mb-5">Welcome to our eBook world</h1>
+<div class="input-group rounded col-md-6 mr-auto">
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+           aria-describedby="search-addon" id="searchBar" />
+    <span class="input-group-text border-0" id="search-addon">
+        <i class="fas fa-search"></i>
+    </span>
+</div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <h3>Genres</h3>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Default checkbox
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <h3>Category</h3>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Default checkbox
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Checked checkbox
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <h3>Rarity</h3>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Common
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Rare
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Limited
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Event
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Epic
+                </label>
+            </div>
+        </div>
+        <div class="col">
+            <h3>Discount</h3>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Default checkbox
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Checked checkbox
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <div class="Card">
+        <div class="ribbon"><span class="ribbon__content">common</span></div>
+    </div>
+    <div class="Card">
+        <div class="ribbon"><span class="ribbon__content">rare</span></div>
+    </div>
+    <div class="Card">
+        <div class="ribbon"><span class="ribbon__content">limited</span></div>
+    </div>
+    <div class="Card">
+        <div class="ribbon"><span class="ribbon__content">event</span></div>
+    </div>
+    <div class="Card">
+        <div class="ribbon"><span class="ribbon__content">epic</span></div>
+    </div>
+</div>
+<script>
+    let searchBar = document.getElementById('searchBar');
+
+    searchBar.addEventListener('keyup', () => {
+        if (searchBar.value.length > 2) {
+            console.log('eventa raboti');
+        }
+
+    });
+</script>

@@ -1,0 +1,68 @@
+﻿.Card {
+    background-color: #d1d8e0;
+    height: 40vh;
+    width: 16rem;
+    margin: 6rem auto;
+    border-radius: 6px;
+    position: relative;
+    box-shadow: 9px 5px 5px rgba(0,0,0,.3);
+    background-image: url(https://m.media-amazon.com/images/I/51y3g75bCJL.jpg);
+    background-position: center;
+    background-size: cover;
+    z-index: 1;
+}
+
+
+.ribbon {
+    width: 130px;
+    height: 135px;
+    overflow: hidden;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.ribbon__content {
+    left: -25px;
+    top: 30px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 10px 0;
+    background-color: #f5cd79;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.192);
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+    border: 2px solid #fff;
+    outline: 5px solid #f5cd79;
+}
+
+.ribbon::before {
+    top: 0;
+    left: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #f19066;
+    box-sizing: content-box;
+}
+
+.ribbon::after {
+    bottom: 0;
+    right: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #f19066;
+}
