@@ -9,6 +9,8 @@
         {
             CreateMap<ElectronicBook, ElectronicBookViewModel>();
             CreateMap<ElectronicBook, ElectronicBook>();
+            CreateMap<BookRarity, BookRarity>();
+            CreateMap<Gener, Gener>();
         }
     }
 }

@@ -11,6 +11,7 @@
         Task<IEnumerable<T>> GetAllByAuthor<T>(string authorName);
         Task<IEnumerable<T>> GetAllByCategory<T>();
         IEnumerable<T> GetAllCategoires<T>();
+        IEnumerable<T> GetAllGeners<T>();
         ElectronicBookServiceModel GetById(string id);
         ElectronicBookServiceModel GetByTitle(string title);
         ElectronicBookServiceModel GetByAuthor(string authorName);

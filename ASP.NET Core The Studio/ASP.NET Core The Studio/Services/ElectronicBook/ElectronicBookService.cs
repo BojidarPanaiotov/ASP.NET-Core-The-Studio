@@ -90,6 +90,12 @@
             .ProjectTo<T>(this.mapper.ConfigurationProvider)
             .ToList();
 
+        public IEnumerable<T> GetAllGeners<T>()
+            => this.context
+            .Geners
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .ToList();
+
         public ElectronicBookServiceModel GetByAuthor(string authorName)
         {
             throw new System.NotImplementedException();

@@ -24,8 +24,9 @@
 
             MigrateDatabase(context);
             SeedAdministrator(serviceProvider);
-            SeedBookRarity(context, serviceProvider);
+            SeedBookRarity(context);
             SeedElectronicBooks(context, serviceProvider);
+            SeedGeners(context);
             return app;
         }
         private static void MigrateDatabase(ApplicationDbContext context)
@@ -64,7 +65,7 @@
                 .GetAwaiter()
                 .GetResult();
         }
-        private static void SeedBookRarity(ApplicationDbContext context, IServiceProvider services)
+        private static void SeedBookRarity(ApplicationDbContext context)
         {
 
             if (context.BookRarities.Any())
@@ -82,6 +83,27 @@
             });
 
             context.SaveChangesAsync();
+        }
+        public static void SeedGeners(ApplicationDbContext context)
+        {
+            if (context.Geners.Any())
+            {
+                return;
+            }
+
+            context.Geners.AddRange(new[]
+            {
+                new Gener{Name = "Criminal"},
+                new Gener{Name = "Horror"},
+                new Gener{Name = "Thriller"},
+                new Gener{Name = "Historical"},
+                new Gener{Name = "Romance"},
+                new Gener{Name = "Fantasy"},
+                new Gener{Name = "Mystery"},
+                new Gener{Name = "Drama"},
+            });
+
+            context.SaveChanges();
         }
         private static void SeedElectronicBooks(ApplicationDbContext context, IServiceProvider services)
         {

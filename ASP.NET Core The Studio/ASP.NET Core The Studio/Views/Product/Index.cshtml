@@ -1,9 +1,10 @@
-﻿@model List<ElectronicBook>
+﻿@model ElectronicBookQueryModel
 
 @{
     ViewData["Title"] = "eBooks";
 }
 <h1 class="text-center text-justify mb-5">Welcome to our eBook world</h1>
+@* Search Bar *@
 <div class="input-group rounded col-md-6 mr-auto">
     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
            aria-describedby="search-addon" id="searchBar" />
@@ -11,92 +12,66 @@
         <i class="fas fa-search"></i>
     </span>
 </div>
+@* Filtering *@
 <div class="container mt-3">
     <div class="row">
         <div class="col">
             <h3>Genres</h3>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Default checkbox
-                </label>
-            </div>
+            @foreach (var gener in Model.Geners)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="@gener.Id">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        @gener.Name
+                    </label>
+                </div>
+            }
         </div>
         <div class="col">
             <h3>Category</h3>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
-                    Default checkbox
+                    Latest
                 </label>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                 <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
+                    Series
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Discount
                 </label>
             </div>
         </div>
         <div class="col">
             <h3>Rarity</h3>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Common
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Rare
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Limited
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Event
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Epic
-                </label>
-            </div>
-        </div>
-        <div class="col">
-            <h3>Discount</h3>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Default checkbox
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                </label>
-            </div>
+            @foreach (var rarity in Model.BookRarities)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="@rarity.Id">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        @rarity.Name
+                    </label>
+                </div>
+            }
         </div>
     </div>
 </div>
-
+@* EBook products *@
 <div class="row mt-5">
-    @foreach (var eBook in Model)
+    @foreach (var eBook in Model.ElectronicBooks)
     {
         <div class="card ml-4 mb-4" style="width: 13rem;">
             <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">@eBook.Title</h5>
+                <h5 class="card-title text-truncate">@eBook.Title</h5>
                 <p class="card-text text-truncate">Description: @eBook.Description</p>
-                <p class="card-text">Author: @eBook.Author</p>
+                <p class="card-text text-truncate">Author: @eBook.Author</p>
                 <p class="card-text">CopySold: @eBook.CopySold</p>
                 <p class="card-text">Rarity: @eBook.BookRarity.Name</p>
                 <a href="#" class="btn btn-primary mb-3">Buy for @eBook.Price BGN</a>
@@ -105,6 +80,3 @@
     }
 </div>
 
-<script>
-    
-</script>
