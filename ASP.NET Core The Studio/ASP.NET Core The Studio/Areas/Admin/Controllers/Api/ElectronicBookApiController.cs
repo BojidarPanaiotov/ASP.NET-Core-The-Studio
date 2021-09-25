@@ -27,5 +27,9 @@
         [Route("categories")]
         public IEnumerable<BookRarity> GetCategories()
             => this.db.BookRarities.ToList();
+        [HttpGet]
+        [Route("books")]
+        public IEnumerable<ElectronicBook> GetElectronicBooks()
+            => this.db.ElectronicBooks.ToList();
     }
 }

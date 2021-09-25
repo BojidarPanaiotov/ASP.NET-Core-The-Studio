@@ -6,9 +6,9 @@
 <h1 class="text-center text-justify mb-5">Welcome to our eBook world</h1>
 @* Search Bar *@
 <div class="input-group rounded col-md-6 mr-auto">
-    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+    <input class="form-control rounded" placeholder="Search" aria-label="Search"
            aria-describedby="search-addon" id="searchBar" />
-    <span class="input-group-text border-0" id="search-addon">
+    <span class="input-group-text border-0">
         <i class="fas fa-search"></i>
     </span>
 </div>
@@ -63,10 +63,10 @@
     </div>
 </div>
 @* EBook products *@
-<div class="row mt-5">
+<div class="row mt-5" id="all_electronic_books">
     @foreach (var eBook in Model.ElectronicBooks)
     {
-        <div class="card ml-4 mb-4" style="width: 13rem;">
+        <div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
             <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title text-truncate">@eBook.Title</h5>
@@ -79,4 +79,38 @@
         </div>
     }
 </div>
+
+<script>
+    let searchBar = document.getElementById('searchBar');
+
+    searchBar.addEventListener('keyup', (e) => {
+        if (searchBar.value.length > 2) {
+            let electronicBookWrapper = document.getElementById('all_electronic_books');
+
+            fetch('api/electronicBooks/books')
+                .then(response => response.json())
+                .then(bookData => {
+                    let electronibBookHtml = '';
+                    bookData.forEach(book => {
+                        if (book.title.includes(searchBar.value)) {
+                            electronibBookHtml += 
+           `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
+            <img class="card-img-top" src="https://m.media-amazon.com/images/I/51y3g75bCJL.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-truncate">${book.title}</h5>
+                <p class="card-text text-truncate">Description: ${book.description}</p>
+                <p class="card-text text-truncate">Author: ${book.author}</p>
+                <p class="card-text">CopySold: ${book.copySold}</p>
+                <p class="card-text">Rarity: ${book.rarity}</p>
+                <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
+                </div>
+            </div>`
+                        }
+                    });
+                    electronicBookWrapper.innerHTML = electronibBookHtml;
+                });
+        }
+        
+    });
+</script>
 

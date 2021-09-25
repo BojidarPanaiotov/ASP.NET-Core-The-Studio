@@ -7,5 +7,6 @@
         public List<BookRarity> BookRarities { get; init; }
         public List<ElectronicBook> ElectronicBooks { get; init; }
         public List<Gener> Geners { get; init; }
+        public string SearchTerm { get; set; }
     }
 }
