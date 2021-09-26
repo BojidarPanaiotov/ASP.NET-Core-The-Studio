@@ -12,6 +12,7 @@
         <i class="fas fa-search"></i>
     </span>
 </div>
+
 @* Filtering *@
 <div class="container mt-3">
     <div class="row">
@@ -60,14 +61,29 @@
                 </div>
             }
         </div>
+        <div class="col">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Price Low To High</a>
+                    <a class="dropdown-item" href="#">Price High To Low</a>
+                    <a class="dropdown-item" href="#">Realse Date</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @* EBook products *@
 <div class="row mt-5" id="all_electronic_books">
     @foreach (var eBook in Model.ElectronicBooks)
     {
+        var rnd = new Random();
+        var rndIndex = rnd.Next(1, 500);
+        var urlImage = $"https://picsum.photos/500/300?random={rndIndex}";
         <div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
-            <img class="card-img-top" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/horror-story-wattpad-ebook-cover-design-template-c25b394f605471c4deaf7bd087d54378_screen.jpg?ts=1585045707" alt="Card image cap">
+            <img class="card-img-top" src="@urlImage" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title text-truncate">@eBook.Title</h5>
                 <p class="card-text text-truncate">Description: @eBook.Description</p>
@@ -93,9 +109,9 @@
                     let electronibBookHtml = '';
                     bookData.forEach(book => {
                         if (book.title.includes(searchBar.value)) {
-                            electronibBookHtml += 
-           `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
-            <img class="card-img-top" src="https://m.media-amazon.com/images/I/51y3g75bCJL.jpg" alt="Card image cap">
+                            electronibBookHtml +=
+                                `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
+            <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title text-truncate">${book.title}</h5>
                 <p class="card-text text-truncate">Description: ${book.description}</p>
@@ -110,7 +126,31 @@
                     electronicBookWrapper.innerHTML = electronibBookHtml;
                 });
         }
-        
+        else {
+            let electronicBookWrapper = document.getElementById('all_electronic_books');
+
+            fetch('api/electronicBooks/books')
+                .then(response => response.json())
+                .then(bookData => {
+                    let electronibBookHtml = '';
+                    bookData.forEach(book => {
+                        electronibBookHtml +=
+                            `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
+            <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-truncate">${book.title}</h5>
+                <p class="card-text text-truncate">Description: ${book.description}</p>
+                <p class="card-text text-truncate">Author: ${book.author}</p>
+                <p class="card-text">CopySold: ${book.copySold}</p>
+                <p class="card-text">Rarity: ${book.rarity}</p>
+                <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
+                </div>
+            </div>`
+                    });
+                    electronicBookWrapper.innerHTML = electronibBookHtml;
+                });
+        }
+
     });
 </script>
 

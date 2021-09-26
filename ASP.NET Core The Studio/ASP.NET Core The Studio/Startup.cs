@@ -4,6 +4,7 @@ namespace ASP.NET_Core_The_Studio
     using ASP.NET_Core_The_Studio.Data.Entities;
     using ASP.NET_Core_The_Studio.Infrastructure.Extensions;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
+    using ASP.NET_Core_The_Studio.Services.EmailSender;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
