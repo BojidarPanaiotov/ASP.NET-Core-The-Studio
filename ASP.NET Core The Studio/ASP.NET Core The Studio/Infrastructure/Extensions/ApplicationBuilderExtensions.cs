@@ -82,7 +82,7 @@
                 new BookRarity{Name = "Antique  "},
             });
 
-            context.SaveChangesAsync();
+            context.SaveChanges();
         }
         public static void SeedGeners(ApplicationDbContext context)
         {

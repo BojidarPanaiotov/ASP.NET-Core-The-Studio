@@ -43,6 +43,7 @@ namespace ASP.NET_Core_The_Studio
             services.AddControllersWithViews();
 
             services.AddTransient<IElectronicBookService, ElectronicBookService>();
+            services.AddTransient<IEmailSender, EmailSender>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

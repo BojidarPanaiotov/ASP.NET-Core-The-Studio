@@ -5,12 +5,15 @@
     using System.Net.Mail;
     using System.Text;
 
-    public class EmailSender
+    public class EmailSender : IEmailSender
     {
-        public static void SendEmail()
+        private const string sender = "psihasal@gmail.com";
+        private const string senderPassword = "123ludmezo123zombie123";
+
+        public void SendEmail(string receiver, string subject, string content)
         {
-            string to = "izroda4@gmail.com"; //To address    
-            string from = "izroda4@gmail.com"; //From address    
+            string to = "psihasal@gmail.com"; //To address    
+            string from = sender; //From address    
             MailMessage message = new MailMessage(from, to);
 
             string mailbody = "In this article you will learn how to send a email using Asp.Net & C#";
@@ -21,7 +24,7 @@
 
             using SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
             {
-                client.Credentials = new NetworkCredential(from, "maikati123");
+                client.Credentials = new NetworkCredential(from, senderPassword);
                 client.EnableSsl = true;
             }
             try
