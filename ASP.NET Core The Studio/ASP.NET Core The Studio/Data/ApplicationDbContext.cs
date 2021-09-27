@@ -16,10 +16,12 @@
         public DbSet<BookRarity> BookRarities { get; init; }
         public DbSet<Gener> Geners { get; init; }
         public DbSet<ElectronicBookGener> ElectronicBookGeners { get; init; }
+        public DbSet<ElectronicBookApplicationUser> ElectronicBookApplicationUsers { get; init; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            //Mapping table for books and geners
             modelBuilder.Entity<ElectronicBookGener>()
                 .HasKey(bc => new { bc.ElectronicBookId, bc.GenerId });
 
@@ -32,6 +34,20 @@
                 .HasOne(g => g.Gener)
                 .WithMany(x => x.ElectronicBookGener)
                 .HasForeignKey(bc => bc.GenerId);
+
+            //Mapping table for book and users
+            modelBuilder.Entity<ElectronicBookApplicationUser>()
+                .HasKey(bc => new { bc.ElectronicBookId, bc.ApplicationUserId });
+
+            modelBuilder.Entity<ElectronicBookApplicationUser>()
+                .HasOne(eb => eb.ElectronicBook)
+                .WithMany(x => x.ApplicationUsers)
+                .HasForeignKey(bc => bc.ElectronicBookId);
+
+            modelBuilder.Entity<ElectronicBookApplicationUser>()
+                .HasOne(eb => eb.ApplicationUser)
+                .WithMany(x => x.ElectronicBooks)
+                .HasForeignKey(bc => bc.ApplicationUserId);
         }
     }
 }

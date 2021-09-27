@@ -74,11 +74,21 @@
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="ElectronicBook" asp-action="Create">Create ElectronicBook</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="ElectronicBook" asp-action="All">See all eBooks</a>                                       
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="" asp-action="">Create Test</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="" asp-action="">Create Test</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="" asp-action="">Create Test</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="" asp-action="">Create Test</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="ElectronicBook" asp-action="All">See all eBooks</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <div class="dropdown show">
+                                    <a class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
+                                        User
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="ElectronicBook" asp-action="Create">My eBooks</a>
                                     </div>
                                 </div>
                             </li>

@@ -9,12 +9,10 @@
         [MaxLength(AuthorNameMaxLength)]
         public string Author { get; init; }
 
-        [Range(MinPage, MaxPage)]
         public int Pages { get; set; }
 
         public int? CopySold { get; set; }
 
-        [Range(typeof(decimal), MinPrice, MaxPrice)]
         public decimal Price { get; set; }
         public string BookRarityId { get; set; }
 
@@ -23,6 +21,7 @@
         public byte[] BookCoverImage { get; set; }
 
         public byte[] Data { get; set; }
-        public ICollection<ElectronicBookGener> ElectronicBookGener { get; set; }
+        public ICollection<ElectronicBookGener> ElectronicBookGener { get; init; }
+        public ICollection<ElectronicBookApplicationUser> ApplicationUsers { get; init; }
     }
 }

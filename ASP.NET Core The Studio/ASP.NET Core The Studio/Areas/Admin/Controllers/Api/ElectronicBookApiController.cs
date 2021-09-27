@@ -8,7 +8,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using static ASP.NET_Core_The_Studio.Areas.Admin.AdminConstants;
-    //api/electronicBooks/categories
+
     [Route("api/electronicBooks")]
     [ApiController]
     public class ElectronicBookApiController : ControllerBase
@@ -24,10 +24,12 @@
 
         [HttpGet]
         [Route("categories")]
+        [Authorize(Roles = AdministratorRoleName)]
         public IEnumerable<BookRarity> GetCategories()
             => this.db.BookRarities.ToList();
         [HttpGet]
         [Route("books")]
+        [Authorize]
         public IEnumerable<ElectronicBook> GetElectronicBooks()
             => this.db.ElectronicBooks.ToList();
         [HttpGet]
@@ -36,5 +38,6 @@
         {
 
         }
+
     }
 }
