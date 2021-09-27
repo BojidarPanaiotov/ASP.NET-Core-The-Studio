@@ -25,5 +25,20 @@
             public const int MaxPage = 5;
             public const int MinPage = 2000;
         }
+
+        public class ApplicationUser
+        {
+            public const int UsernameMinLength = 3;
+            public const int UsernameMaxLength = 40;
+        }
+
+        public class Feedback
+        {
+            public const int SubjectMinLength = 8;
+            public const int SubjectMaxLength = 75;
+
+            public const int ContentMinLength = 10;
+            public const int ContentMaxLength = 1000;
+        }
     }
 }

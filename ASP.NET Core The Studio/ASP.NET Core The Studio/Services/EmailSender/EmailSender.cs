@@ -7,33 +7,35 @@
 
     public class EmailSender : IEmailSender
     {
-        private const string sender = "psihasal@gmail.com";
-        private const string senderPassword = "123ludmezo123zombie123";
+        private const string receiver = "psihasal@gmail.com";
+        private const string receiverPassword = "123ludmezo123zombie123";
 
-        public void SendEmail(string receiver, string subject, string content)
+        public bool Send(string sender, string subject, string content)
         {
-            string to = "psihasal@gmail.com"; //To address    
-            string from = sender; //From address    
+            string to = receiver; //To address    
+            string from = receiver; //From address    
             MailMessage message = new MailMessage(from, to);
 
-            string mailbody = "In this article you will learn how to send a email using Asp.Net & C#";
-            message.Subject = "Sending Email Using Asp.Net & C#";
-            message.Body = mailbody;
+            message.Subject = subject;
+            message.Body = content + Environment.NewLine + sender;
             message.BodyEncoding = Encoding.UTF8;
             message.IsBodyHtml = true;
 
             using SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
             {
-                client.Credentials = new NetworkCredential(from, senderPassword);
+                client.Credentials = new NetworkCredential(from, receiverPassword);
                 client.EnableSsl = true;
             }
             try
             {
                 client.Send(message);
+
+                return true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                //TODO: save in log
+                return false;
             }
         }
     }
