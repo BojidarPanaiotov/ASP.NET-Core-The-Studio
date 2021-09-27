@@ -54,7 +54,7 @@
             @foreach (var rarity in Model.BookRarities)
             {
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="@rarity.Id">
+                    <input class="form-check-input book_rarity" type="checkbox" value="@rarity.Id" name="@rarity.Name" checked>
                     <label class="form-check-label" for="flexCheckDefault">
                         @rarity.Name
                     </label>
@@ -75,6 +75,7 @@
         </div>
     </div>
 </div>
+
 @* EBook products *@
 <div class="row mt-5" id="all_electronic_books">
     @foreach (var eBook in Model.ElectronicBooks)
@@ -95,7 +96,7 @@
         </div>
     }
 </div>
-
+@* Seach bar functionality script *@
 <script>
     let searchBar = document.getElementById('searchBar');
 
@@ -151,6 +152,28 @@
                 });
         }
 
+
     });
+</script>
+@* Checkboxes book rarity functionality *@
+<script>
+    let rarityCheckBoxes = document.getElementsByClassName('book_rarity');
+
+    for (var i = 0; i < rarityCheckBoxes.length; i++) {
+        rarityCheckBoxes[i].addEventListener('change', () => {
+            BuildQueryStringForBookRarity(rarityCheckBoxes);
+        })
+    }
+
+    function BuildQueryStringForBookRarity(checkboxCollection) {
+        let queryString = '';
+        for (let checkbox of checkboxCollection) {
+            if (checkbox.checked) {
+                queryString += `${checkbox.name.trimEnd()}=1&`;
+            }
+        }
+        fetch(`api/electronicBooks/test?${queryString}`)
+    }
+
 </script>
 

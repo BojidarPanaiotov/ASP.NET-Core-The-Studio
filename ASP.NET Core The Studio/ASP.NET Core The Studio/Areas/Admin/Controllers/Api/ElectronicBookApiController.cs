@@ -11,7 +11,6 @@
     //api/electronicBooks/categories
     [Route("api/electronicBooks")]
     [ApiController]
-    [Authorize(Roles = AdministratorRoleName)]
     public class ElectronicBookApiController : ControllerBase
     {
         private readonly IElectronicBookService electronicBookService;
@@ -31,5 +30,11 @@
         [Route("books")]
         public IEnumerable<ElectronicBook> GetElectronicBooks()
             => this.db.ElectronicBooks.ToList();
+        [HttpGet]
+        [Route("test")]
+        public void Test(string common,string rare,string antique,string @event,string limited)
+        {
+
+        }
     }
 }
