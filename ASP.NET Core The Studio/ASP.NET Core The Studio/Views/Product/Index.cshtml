@@ -7,74 +7,76 @@
 @* Search Bar *@
 <div class="input-group rounded col-md-6 mr-auto">
     <input class="form-control rounded" placeholder="Search" aria-label="Search"
-           aria-describedby="search-addon" id="searchBar" />
+           aria-describedby="search-addon" id="searchBar" name="SearchTerm" />
     <span class="input-group-text border-0">
         <i class="fas fa-search"></i>
     </span>
 </div>
-
-@* Filtering *@
-<div class="container mt-3">
-    <div class="row">
-        <div class="col">
-            <h3>Genres</h3>
-            @foreach (var gener in Model.Geners)
-            {
+<div class="container" id="filtering_searching_managing">
+    @* Filtering *@
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col">
+                <h3>Genres</h3>
+                @foreach (var gener in Model.Geners)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input book_gener" type="checkbox" value="@gener.Id" name="@gener.Name" checked>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @gener.Name
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="col">
+                <h3>Category</h3>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="@gener.Id">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
-                        @gener.Name
+                        Latest
                     </label>
                 </div>
-            }
-        </div>
-        <div class="col">
-            <h3>Category</h3>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Latest
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Series
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Discount
-                </label>
-            </div>
-        </div>
-        <div class="col">
-            <h3>Rarity</h3>
-            @foreach (var rarity in Model.BookRarities)
-            {
                 <div class="form-check">
-                    <input class="form-check-input book_rarity" type="checkbox" value="@rarity.Id" name="@rarity.Name" checked>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        @rarity.Name
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Series
                     </label>
                 </div>
-            }
-        </div>
-        <div class="col">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort By
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Price Low To High</a>
-                    <a class="dropdown-item" href="#">Price High To Low</a>
-                    <a class="dropdown-item" href="#">Realse Date</a>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Discount
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Rarity</h3>
+                @foreach (var rarity in Model.BookRarities)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input book_rarity" type="checkbox" value="@rarity.Id" name="@rarity.Name" checked>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @rarity.Name
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Price Low To High</a>
+                        <a class="dropdown-item" href="#">Price High To Low</a>
+                        <a class="dropdown-item" href="#">Realse Date</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @* EBook products *@
 <div class="row mt-5" id="all_electronic_books">
@@ -97,82 +99,121 @@
     }
 </div>
 @* Seach bar functionality script *@
-<script>
-    let searchBar = document.getElementById('searchBar');
+@*<script>
+        let searchBar = document.getElementById('searchBar');
 
-    searchBar.addEventListener('keyup', (e) => {
-        if (searchBar.value.length > 2) {
-            let electronicBookWrapper = document.getElementById('all_electronic_books');
+        searchBar.addEventListener('keyup', (e) => {
+            if (searchBar.value.length > 2) {
+                let electronicBookWrapper = document.getElementById('all_electronic_books');
 
-            fetch('api/electronicBooks/books')
-                .then(response => response.json())
-                .then(bookData => {
-                    let electronibBookHtml = '';
-                    bookData.forEach(book => {
-                        if (book.title.includes(searchBar.value)) {
+                fetch('api/electronicBooks/books')
+                    .then(response => response.json())
+                    .then(bookData => {
+                        let electronibBookHtml = '';
+                        bookData.forEach(book => {
+                            if (book.title.includes(searchBar.value)) {
+                                electronibBookHtml +=
+                                    `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
+                <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title text-truncate">${book.title}</h5>
+                    <p class="card-text text-truncate">Description: ${book.description}</p>
+                    <p class="card-text text-truncate">Author: ${book.author}</p>
+                    <p class="card-text">CopySold: ${book.copySold}</p>
+                    <p class="card-text">Rarity: ${book.rarity}</p>
+                    <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
+                    </div>
+                </div>`
+                            }
+                        });
+                        electronicBookWrapper.innerHTML = electronibBookHtml;
+                    });
+            }
+            else {
+                let electronicBookWrapper = document.getElementById('all_electronic_books');
+
+                fetch('api/electronicBooks/books')
+                    .then(response => response.json())
+                    .then(bookData => {
+                        let electronibBookHtml = '';
+                        bookData.forEach(book => {
                             electronibBookHtml +=
                                 `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
-            <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title text-truncate">${book.title}</h5>
-                <p class="card-text text-truncate">Description: ${book.description}</p>
-                <p class="card-text text-truncate">Author: ${book.author}</p>
-                <p class="card-text">CopySold: ${book.copySold}</p>
-                <p class="card-text">Rarity: ${book.rarity}</p>
-                <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
-                </div>
-            </div>`
-                        }
+                <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title text-truncate">${book.title}</h5>
+                    <p class="card-text text-truncate">Description: ${book.description}</p>
+                    <p class="card-text text-truncate">Author: ${book.author}</p>
+                    <p class="card-text">CopySold: ${book.copySold}</p>
+                    <p class="card-text">Rarity: ${book.rarity}</p>
+                    <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
+                    </div>
+                </div>`
+                        });
+                        electronicBookWrapper.innerHTML = electronibBookHtml;
                     });
-                    electronicBookWrapper.innerHTML = electronibBookHtml;
-                });
-        }
-        else {
-            let electronicBookWrapper = document.getElementById('all_electronic_books');
-
-            fetch('api/electronicBooks/books')
-                .then(response => response.json())
-                .then(bookData => {
-                    let electronibBookHtml = '';
-                    bookData.forEach(book => {
-                        electronibBookHtml +=
-                            `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
-            <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title text-truncate">${book.title}</h5>
-                <p class="card-text text-truncate">Description: ${book.description}</p>
-                <p class="card-text text-truncate">Author: ${book.author}</p>
-                <p class="card-text">CopySold: ${book.copySold}</p>
-                <p class="card-text">Rarity: ${book.rarity}</p>
-                <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
-                </div>
-            </div>`
-                    });
-                    electronicBookWrapper.innerHTML = electronibBookHtml;
-                });
-        }
+            }
 
 
-    });
-</script>
+        });
+    </script>*@
 @* Checkboxes book rarity functionality *@
 <script>
-    let rarityCheckBoxes = document.getElementsByClassName('book_rarity');
+    let rarityCheckboxes = document.getElementsByClassName('book_rarity');
+    let generCheckboxes = document.getElementsByClassName('book_gener');
+    let searchBar = document.getElementById('searchBar');
+    let queryString = '';
 
-    for (var i = 0; i < rarityCheckBoxes.length; i++) {
-        rarityCheckBoxes[i].addEventListener('change', () => {
-            BuildQueryStringForBookRarity(rarityCheckBoxes);
-        })
-    }
+    searchBar.addEventListener('keyup', (event) => {
+        //TODO: Make a regex here
+        if (event.keyCode >= 65 &&
+            event.keyCode <= 90 &&
+            searchBar.value.length > 2) {
+            queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
+            console.log(queryString);
+            console.log(event.keyCode)
+            fetch(`api/electronicBooks/test?${queryString}`)
+        } else {
+            console.log(event.keyCode)
+        }
 
-    function BuildQueryStringForBookRarity(checkboxCollection) {
-        let queryString = '';
+    })
+
+    document.getElementById('filtering_searching_managing').addEventListener('change', () => {
+        queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
+        console.log(queryString);
+        fetch(`api/electronicBooks/test?${queryString}`)
+    })
+
+    function getQueryStringFromCheckboxes(checkboxCollection) {
+        var result = '';
+
         for (let checkbox of checkboxCollection) {
             if (checkbox.checked) {
-                queryString += `${checkbox.name.trimEnd()}=1&`;
+                result += `${checkbox.name.trimEnd()}=${checkbox.name.trimEnd()}&`;
             }
         }
-        fetch(`api/electronicBooks/test?${queryString}`)
+
+        return result;
+    }
+
+    function getQueryFromSearchTerm(searchBar) {
+        let result = '';
+
+        result += `${searchBar.getAttribute("name")}=${searchBar.value.toLowerCase()}&`;
+
+        return result;
+    }
+
+    function buildQueryString(searchBar, rarityCheckboxes, generCheckboxes) {
+        let result = '';
+
+        result += getQueryFromSearchTerm(searchBar);
+        result += getQueryStringFromCheckboxes(rarityCheckboxes);
+        result += getQueryStringFromCheckboxes(generCheckboxes);
+
+        result = result.substring(0, result.length - 1);
+        return result;
     }
 
 </script>

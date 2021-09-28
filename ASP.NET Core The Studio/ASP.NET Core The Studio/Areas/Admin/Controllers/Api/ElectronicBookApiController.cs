@@ -1,5 +1,6 @@
 ﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Controllers.Api
 {
+    using ASP.NET_Core_The_Studio.Areas.Admin.Models;
     using ASP.NET_Core_The_Studio.Data;
     using ASP.NET_Core_The_Studio.Data.Entities;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
@@ -34,10 +35,9 @@
             => this.db.ElectronicBooks.ToList();
         [HttpGet]
         [Route("test")]
-        public void Test(string common,string rare,string antique,string @event,string limited)
+        public void Test([FromQuery] FilteringQueryStringModel queryStringModel)
         {
 
         }
-
     }
 }
