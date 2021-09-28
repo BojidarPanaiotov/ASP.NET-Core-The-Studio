@@ -1,4 +1,4 @@
-﻿@model ElectronicBookQueryModel
+﻿@model SearchQueryModel
 
 @{
     ViewData["Title"] = "eBooks";
@@ -21,7 +21,7 @@
                 @foreach (var gener in Model.Geners)
                 {
                     <div class="form-check">
-                        <input class="form-check-input book_gener" type="checkbox" value="@gener.Id" name="@gener.Name" checked>
+                        <input class="form-check-input book_gener" type="checkbox" value="@gener.Id" name="@gener.Name">
                         <label class="form-check-label" for="flexCheckDefault">
                             @gener.Name
                         </label>
@@ -37,13 +37,13 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                     <label class="form-check-label" for="flexCheckChecked">
                         Series
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                     <label class="form-check-label" for="flexCheckChecked">
                         Discount
                     </label>
@@ -54,7 +54,7 @@
                 @foreach (var rarity in Model.BookRarities)
                 {
                     <div class="form-check">
-                        <input class="form-check-input book_rarity" type="checkbox" value="@rarity.Id" name="@rarity.Name" checked>
+                        <input class="form-check-input book_rarity" type="checkbox" value="@rarity.Id" name="@rarity.Name">
                         <label class="form-check-label" for="flexCheckDefault">
                             @rarity.Name
                         </label>
@@ -92,71 +92,14 @@
                 <p class="card-text text-truncate">Description: @eBook.Description</p>
                 <p class="card-text text-truncate">Author: @eBook.Author</p>
                 <p class="card-text">CopySold: @eBook.CopySold</p>
-                <p class="card-text">Rarity: @eBook.BookRarity.Name</p>
+                <p class="card-text">Rarity: @eBook.BookRarityName</p>
+                <p class="card-text">Geners: @string.Join(',',eBook.Geners.Select(x=> x.Name))</p>
+                @*<p class="card-text">Rarity: @string.Join(',',eBook.Geners)</p>*@
                 <a href="#" class="btn btn-primary mb-3">Buy for @eBook.Price BGN</a>
             </div>
         </div>
     }
 </div>
-@* Seach bar functionality script *@
-@*<script>
-        let searchBar = document.getElementById('searchBar');
-
-        searchBar.addEventListener('keyup', (e) => {
-            if (searchBar.value.length > 2) {
-                let electronicBookWrapper = document.getElementById('all_electronic_books');
-
-                fetch('api/electronicBooks/books')
-                    .then(response => response.json())
-                    .then(bookData => {
-                        let electronibBookHtml = '';
-                        bookData.forEach(book => {
-                            if (book.title.includes(searchBar.value)) {
-                                electronibBookHtml +=
-                                    `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
-                <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title text-truncate">${book.title}</h5>
-                    <p class="card-text text-truncate">Description: ${book.description}</p>
-                    <p class="card-text text-truncate">Author: ${book.author}</p>
-                    <p class="card-text">CopySold: ${book.copySold}</p>
-                    <p class="card-text">Rarity: ${book.rarity}</p>
-                    <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
-                    </div>
-                </div>`
-                            }
-                        });
-                        electronicBookWrapper.innerHTML = electronibBookHtml;
-                    });
-            }
-            else {
-                let electronicBookWrapper = document.getElementById('all_electronic_books');
-
-                fetch('api/electronicBooks/books')
-                    .then(response => response.json())
-                    .then(bookData => {
-                        let electronibBookHtml = '';
-                        bookData.forEach(book => {
-                            electronibBookHtml +=
-                                `<div class="card ml-4 mb-4 electronic_book_product" style="width: 13rem;">
-                <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title text-truncate">${book.title}</h5>
-                    <p class="card-text text-truncate">Description: ${book.description}</p>
-                    <p class="card-text text-truncate">Author: ${book.author}</p>
-                    <p class="card-text">CopySold: ${book.copySold}</p>
-                    <p class="card-text">Rarity: ${book.rarity}</p>
-                    <a href="#" class="btn btn-primary mb-3">Buy for ${book.price} BGN</a>
-                    </div>
-                </div>`
-                        });
-                        electronicBookWrapper.innerHTML = electronibBookHtml;
-                    });
-            }
-
-
-        });
-    </script>*@
 @* Checkboxes book rarity functionality *@
 <script>
     let rarityCheckboxes = document.getElementsByClassName('book_rarity');
@@ -171,8 +114,9 @@
             searchBar.value.length > 2) {
             queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
             console.log(queryString);
-            console.log(event.keyCode)
-            fetch(`api/electronicBooks/test?${queryString}`)
+            console.log(event.keyCode);
+            fetch(`api/electronicBooks/test?${queryString}`);
+            
         } else {
             console.log(event.keyCode)
         }
@@ -185,12 +129,12 @@
         fetch(`api/electronicBooks/test?${queryString}`)
     })
 
-    function getQueryStringFromCheckboxes(checkboxCollection) {
+    function getQueryStringFromCheckboxes(checkboxCollection,checkboxType) {
         var result = '';
 
         for (let checkbox of checkboxCollection) {
             if (checkbox.checked) {
-                result += `${checkbox.name.trimEnd()}=${checkbox.name.trimEnd()}&`;
+                result += `${checkboxType}=${checkbox.name.trimEnd()}&`;
             }
         }
 
@@ -209,8 +153,8 @@
         let result = '';
 
         result += getQueryFromSearchTerm(searchBar);
-        result += getQueryStringFromCheckboxes(rarityCheckboxes);
-        result += getQueryStringFromCheckboxes(generCheckboxes);
+        result += getQueryStringFromCheckboxes(rarityCheckboxes,'rarities');
+        result += getQueryStringFromCheckboxes(generCheckboxes,'geners');
 
         result = result.substring(0, result.length - 1);
         return result;

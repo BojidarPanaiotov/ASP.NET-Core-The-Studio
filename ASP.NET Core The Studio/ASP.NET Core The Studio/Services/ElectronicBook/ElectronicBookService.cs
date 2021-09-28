@@ -69,6 +69,8 @@
         public IEnumerable<T> GetAll<T>()
             => this.context
                 .ElectronicBooks
+                .Include(user => user.ElectronicBookGener)
+                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
                 .ProjectTo<T>(this.mapper.ConfigurationProvider)
                 .ToList();
         //TODO: Probably there is better approach  
@@ -84,7 +86,7 @@
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<T> GetAllCategoires<T>()
+        public IEnumerable<T> GetAllRarities<T>()
             => this.context
             .BookRarities
             .ProjectTo<T>(this.mapper.ConfigurationProvider)

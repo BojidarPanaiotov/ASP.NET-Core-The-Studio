@@ -1,7 +1,7 @@
 ﻿namespace ASP.NET_Core_The_Studio.Controllers
 {
-    using ASP.NET_Core_The_Studio.Data.Entities;
     using ASP.NET_Core_The_Studio.Models;
+    using ASP.NET_Core_The_Studio.Models.SearchQueryModels;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
@@ -15,12 +15,14 @@
         }
         public IActionResult Index()
         {
-            return View(new ElectronicBookQueryModel() 
+            var result = new SearchQueryModel()
             {
-                BookRarities = this.electronicBookService.GetAllCategoires<BookRarity>().ToList(),
-                ElectronicBooks = this.electronicBookService.GetAll<ElectronicBook>().ToList(),
-                Geners = this.electronicBookService.GetAllGeners<Gener>().OrderBy(x => x.Name).ToList()
-            });
+                BookRarities = this.electronicBookService.GetAllRarities<BookRarityQueryModel>().ToList(),
+                ElectronicBooks = this.electronicBookService.GetAll<ElectronicBookQueryModel>().ToList(),
+                Geners = this.electronicBookService.GetAllGeners<GenerQueryModel>().OrderBy(x => x.Name).ToList()
+            };
+
+            return View(result);
         }
     }
 }

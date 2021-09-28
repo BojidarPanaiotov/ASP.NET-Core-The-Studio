@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
@@ -27,6 +28,7 @@
             SeedBookRarity(context);
             SeedElectronicBooks(context, serviceProvider);
             SeedGeners(context);
+            SeedRandomBookGeners(context);
             return app;
         }
         private static void MigrateDatabase(ApplicationDbContext context)
@@ -129,13 +131,31 @@
                     Data = null,
                     Title = SetRandomTitle(),
                     Description = "Lorem ipsumLorem ipsumLorem ipsumLorem ipsum",
-                    UserId = adminId,
+                    UserId = adminId
                 };
                 eBooks.Add(eBook);
             }
 
             context.ElectronicBooks.AddRange(eBooks);
             context.SaveChanges();
+        }
+        private static void SeedRandomBookGeners(ApplicationDbContext context)
+        {
+            if (context.ElectronicBookGeners.Any())
+            {
+                return;
+            }
+
+            var books = context.ElectronicBooks.ToList();
+            for (int i = 0; i < books.Count; i++)
+            {
+                var currentBook = books[i];
+                var randomGener = SetRandomGener(context, currentBook);
+                context.ElectronicBookGeners.Add(randomGener);
+            }
+
+            context.SaveChanges();
+
         }
         private static string SetRandomBookRarityId(ApplicationDbContext context)
         {
@@ -146,12 +166,12 @@
 
             return bookRarities[randomBookRarityIndex].Id;
         }
-        private static decimal SetRandomPriceInRange(int min,int max)
+        private static decimal SetRandomPriceInRange(int min, int max)
         {
             Random rnd = new Random();
             rnd.Next(min, max);
 
-            return rnd.Next(min, max); 
+            return rnd.Next(min, max);
         }
         private static int SetRandomCopySold()
         {
@@ -160,7 +180,7 @@
         }
         private static string SetRandomAuthor()
         {
-            string[] authors = { 
+            string[] authors = {
                 "Bojidar Ivanov",
                 "Petko Ivanov",
                 "Jordan Zankanakar",
@@ -169,7 +189,7 @@
                 "Bojidar Vodafon",
             };
             Random rnd = new Random();
-            var radnomIndex  = rnd.Next(0, authors.Length);
+            var radnomIndex = rnd.Next(0, authors.Length);
             return authors[radnomIndex];
         }
         private static string SetRandomTitle()
@@ -186,6 +206,23 @@
             var radnomIndex = rnd.Next(0, titles.Length);
 
             return titles[radnomIndex];
+        }
+        private static Gener GetRandomGener(ApplicationDbContext context)
+        {
+            var geners = context.Geners.ToList();
+
+            Random rnd = new Random();
+            var radnomIndex = rnd.Next(0, geners.Count);
+
+            return geners[radnomIndex];
+        }
+        private static ElectronicBookGener SetRandomGener(ApplicationDbContext context, ElectronicBook book)
+        {
+            return new ElectronicBookGener
+            {
+                Gener = GetRandomGener(context),
+                ElectronicBook = book
+            };
         }
     }
 }

@@ -10,7 +10,7 @@
         IEnumerable<T> GetAll<T>();
         Task<IEnumerable<T>> GetAllByAuthor<T>(string authorName);
         Task<IEnumerable<T>> GetAllByCategory<T>();
-        IEnumerable<T> GetAllCategoires<T>();
+        IEnumerable<T> GetAllRarities<T>();
         IEnumerable<T> GetAllGeners<T>();
         ElectronicBookServiceModel GetById(string id);
         ElectronicBookServiceModel GetByTitle(string title);

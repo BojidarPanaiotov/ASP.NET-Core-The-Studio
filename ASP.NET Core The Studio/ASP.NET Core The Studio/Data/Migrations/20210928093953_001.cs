@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ASP.NET_Core_The_Studio.Data.Migrations
 {
-    public partial class InititalCreate : Migration
+    public partial class _001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -188,10 +188,10 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                     BookRarityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     BookCoverImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(110)", maxLength: 110, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(110)", maxLength: 110, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -201,13 +201,37 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ElectronicBooks_BookRarities_BookRarityId",
                         column: x => x.BookRarityId,
                         principalTable: "BookRarities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ElectronicBookApplicationUsers",
+                columns: table => new
+                {
+                    ElectronicBookId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElectronicBookApplicationUsers", x => new { x.ElectronicBookId, x.ApplicationUserId });
+                    table.ForeignKey(
+                        name: "FK_ElectronicBookApplicationUsers_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ElectronicBookApplicationUsers_ElectronicBooks_ElectronicBookId",
+                        column: x => x.ElectronicBookId,
+                        principalTable: "ElectronicBooks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -274,6 +298,11 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ElectronicBookApplicationUsers_ApplicationUserId",
+                table: "ElectronicBookApplicationUsers",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ElectronicBookGeners_GenerId",
                 table: "ElectronicBookGeners",
                 column: "GenerId");
@@ -305,6 +334,9 @@ namespace ASP.NET_Core_The_Studio.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ElectronicBookApplicationUsers");
 
             migrationBuilder.DropTable(
                 name: "ElectronicBookGeners");

@@ -6,6 +6,7 @@
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Linq;
     using static ASP.NET_Core_The_Studio.Areas.Admin.AdminConstants;
@@ -35,9 +36,29 @@
             => this.db.ElectronicBooks.ToList();
         [HttpGet]
         [Route("test")]
-        public void Test([FromQuery] FilteringQueryStringModel queryStringModel)
+        public IEnumerable<ElectronicBook> Test(
+            [FromQuery] string searchTerm,
+            [FromQuery] string[] rarities,
+            [FromQuery] string[] geners)
         {
+            //TODO: Think for optimazed query to check all book with those geners (Use Intersec(),Any(),All())
+            //TODO: Introduce service for this and then make it as query not as a physical collection
+            var res = this.db.ElectronicBooks
+                .Include(eb => eb.BookRarity)
+                .Include(user => user.ElectronicBookGener)
+                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+                .Where(eb => rarities.Contains(eb.BookRarity.Name.ToLower()))
+                .ToList();
+                
 
+            //foreach (var item in res)
+            //{
+            //    System.Console.WriteLine($"Title:{item.Title} - Rarity:{item.BookRarity.Name}");
+            //}
+            //;
+            //System.Console.Clear();
+
+            return res;
         }
     }
 }

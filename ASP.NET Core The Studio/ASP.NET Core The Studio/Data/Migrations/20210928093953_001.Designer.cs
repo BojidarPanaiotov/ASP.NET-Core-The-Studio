@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ASP.NET_Core_The_Studio.Migrations
+namespace ASP.NET_Core_The_Studio.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210927103601_NewMappingTableElectronicBookAppUsers")]
-    partial class NewMappingTableElectronicBookAppUsers
+    [Migration("20210928093953_001")]
+    partial class _001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
