@@ -1,6 +1,5 @@
 ﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Models
 {
-    using ASP.NET_Core_The_Studio.Data.Entities;
     using ASP.NET_Core_The_Studio.Models.ViewModels;
     using System.Collections.Generic;
 

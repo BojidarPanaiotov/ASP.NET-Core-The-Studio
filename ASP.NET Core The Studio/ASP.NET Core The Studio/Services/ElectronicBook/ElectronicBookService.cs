@@ -46,7 +46,6 @@
                 Data = data
             };
 
-            //TODO: Check why some records are not saving into the database if you use method SaveChangesAsyn()
             await this.context.ElectronicBooks.AddAsync(electronicBook);
             this.context.SaveChanges();
         }
@@ -66,15 +65,19 @@
             throw new System.NotImplementedException();
         }
 
+        public IEnumerable<T> GetAllElectronicBooksWithGeners<T>()
+            => this.context
+                .ElectronicBooks
+                .Include(user => user.ElectronicBookGener)
+                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+                .ProjectTo<T>(this.mapper.ConfigurationProvider)
+                .ToList();
         public IEnumerable<T> GetAllElectronicBooks<T>()
             => this.context
                 .ElectronicBooks
-                //.Include(user => user.ElectronicBookGener)
-                //.ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
                 .ProjectTo<T>(this.mapper.ConfigurationProvider)
                 .ToList();
-        //TODO: Probably there is better approach  
-        public async Task<IEnumerable<T>> GetAllByAuthor<T>(string authorName)
+        public async Task<IEnumerable<T>> GetAllElectronicBooksByAuthor<T>(string authorName)
             => await this.context
             .ElectronicBooks
             .Where(x => x.Author.ToLower() == authorName)
@@ -118,7 +121,7 @@
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<T> GetBooksByFilters<T>(string searchTermTitle, string[] rarities, string[] geners)
+        public IEnumerable<T> GetElectronicBooksByFilters<T>(string searchTermTitle, string[] rarities, string[] geners)
             //TODO: Think for optimazed query to check all book with those geners (Use Intersec(),Any(),All())
             //TODO: Introduce service for this and then make it as query not as a physical collection
             => this.context.ElectronicBooks

@@ -7,7 +7,8 @@
     public interface IElectronicBookService
     {
         IEnumerable<T> GetAllElectronicBooks<T>();
-        Task<IEnumerable<T>> GetAllByAuthor<T>(string authorName);
+        IEnumerable<T> GetAllElectronicBooksWithGeners<T>();
+        Task<IEnumerable<T>> GetAllElectronicBooksByAuthor<T>(string authorName);
         Task<IEnumerable<T>> GetAllByCategory<T>();
         IEnumerable<T> GetAllRarities<T>();
         IEnumerable<T> GetAllGeners<T>();
@@ -25,6 +26,6 @@
         Task Update(ElectronicBookServiceModel eBookModel, string eBookId);
         Task Delete(string id);
         ElectronicBookDetailsServiceModel Details(string id);
-        IEnumerable<T> GetBooksByFilters<T>(string searchTermTitle,string[] rarities,string[] geners);
+        IEnumerable<T> GetElectronicBooksByFilters<T>(string searchTermTitle,string[] rarities,string[] geners);
     }
 }

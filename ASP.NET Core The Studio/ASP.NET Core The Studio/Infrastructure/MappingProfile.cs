@@ -16,6 +16,14 @@
         {
             CreateMap<ElectronicBook, ElectronicBookViewModel>();
             CreateMap<ElectronicBook, ElectronicBook>();
+            CreateMap<ElectronicBook, ElectronicBookApiModel>()
+                .ForMember(x => x.Geners,
+                opt => opt.MapFrom(
+                    src => src.ElectronicBookGener.Select(x => new BookGenerApiModel
+                    {
+                        Id = x.Gener.Id,
+                        Name = x.Gener.Name
+                    })));
             CreateMap<ElectronicBook, ElectronicBookQueryModel>()
                 .ForMember(x => x.Geners,
                 opt => opt.MapFrom(

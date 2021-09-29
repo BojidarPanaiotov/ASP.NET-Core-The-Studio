@@ -41,7 +41,7 @@
             [FromQuery] string[] geners)
         {
             var books = this.electronicBookService
-                .GetBooksByFilters<ElectronicBookViewModel>(searchTermTitle, rarities, geners)
+                .GetElectronicBooksByFilters<ElectronicBookViewModel>(searchTermTitle, rarities, geners)
                 .ToList();
 
             BookLogger(books);
