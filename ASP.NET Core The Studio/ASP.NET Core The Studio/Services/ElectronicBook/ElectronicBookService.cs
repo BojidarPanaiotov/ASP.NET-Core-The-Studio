@@ -66,11 +66,11 @@
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public IEnumerable<T> GetAllElectronicBooks<T>()
             => this.context
                 .ElectronicBooks
-                .Include(user => user.ElectronicBookGener)
-                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+                //.Include(user => user.ElectronicBookGener)
+                //.ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
                 .ProjectTo<T>(this.mapper.ConfigurationProvider)
                 .ToList();
         //TODO: Probably there is better approach  
@@ -117,5 +117,17 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public IEnumerable<T> GetBooksByFilters<T>(string searchTermTitle, string[] rarities, string[] geners)
+            //TODO: Think for optimazed query to check all book with those geners (Use Intersec(),Any(),All())
+            //TODO: Introduce service for this and then make it as query not as a physical collection
+            => this.context.ElectronicBooks
+                .Include(eb => eb.BookRarity)
+                .Include(user => user.ElectronicBookGener)
+                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+                .Where(eb => rarities.Contains(eb.BookRarity.Name.ToLower()) || !rarities.Any())
+                .Where(eb => eb.ElectronicBookGener.Any(x => geners.Contains(x.Gener.Name)) || !geners.Any())
+                .ProjectTo<T>(this.mapper.ConfigurationProvider)
+                .ToList();
     }
 }

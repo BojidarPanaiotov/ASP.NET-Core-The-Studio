@@ -61,7 +61,7 @@
         [Authorize]
         [HttpGet]
         public IActionResult All()
-            =>View(this.electronicBookService.GetAll<ElectronicBookViewModel>());
+            =>View(this.electronicBookService.GetAllElectronicBooks<ElectronicBookViewModel>());
         
 
         [Authorize]

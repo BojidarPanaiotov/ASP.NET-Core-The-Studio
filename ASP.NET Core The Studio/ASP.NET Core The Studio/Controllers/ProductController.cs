@@ -18,7 +18,7 @@
             var result = new SearchQueryModel()
             {
                 BookRarities = this.electronicBookService.GetAllRarities<BookRarityQueryModel>().ToList(),
-                ElectronicBooks = this.electronicBookService.GetAll<ElectronicBookQueryModel>().ToList(),
+                ElectronicBooks = this.electronicBookService.GetAllElectronicBooks<ElectronicBookQueryModel>().ToList(),
                 Geners = this.electronicBookService.GetAllGeners<GenerQueryModel>().OrderBy(x => x.Name).ToList()
             };
 
