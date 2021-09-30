@@ -3,6 +3,7 @@
     using ASP.NET_Core_The_Studio.Areas.Admin.Models;
     using ASP.NET_Core_The_Studio.Areas.Admin.Models.Books;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
+    using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -37,14 +38,15 @@
         [Route("test")]
         public IEnumerable<ElectronicBookViewModel> Test(
             [FromQuery] string searchTermTitle,
+            [FromQuery] int sorting,
             [FromQuery] string[] rarities,
             [FromQuery] string[] geners)
         {
+            var bookSort = (BookSort)sorting;
             var books = this.electronicBookService
-                .GetElectronicBooksByFilters<ElectronicBookViewModel>(searchTermTitle, rarities, geners)
-                .ToList();
+                .GetElectronicBooksByFilters(bookSort, searchTermTitle, rarities, geners);
 
-            BookLogger(books);
+            //BookLogger(books);
 
             return books;
         }

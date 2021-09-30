@@ -13,6 +13,7 @@
         {
             this.electronicBookService = electronicBookService;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var result = new SearchQueryModel()
