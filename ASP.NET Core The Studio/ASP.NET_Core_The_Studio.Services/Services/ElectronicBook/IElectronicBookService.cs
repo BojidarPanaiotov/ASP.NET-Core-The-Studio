@@ -1,8 +1,7 @@
 ﻿namespace ASP.NET_Core_The_Studio.Services.ElectronicBook
 {
-    using ASP.NET_Core_The_Studio.Areas.Admin.Models;
-    using ASP.NET_Core_The_Studio.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
+    using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -28,7 +27,7 @@
         Task Update(ElectronicBookServiceModel eBookModel, string eBookId);
         Task Delete(string id);
         ElectronicBookDetailsServiceModel Details(string id);
-        List<ElectronicBookViewModel> GetElectronicBooksByFilters(BookSort sorting,
+        IEnumerable<ElectronicBookServiceModel> GetElectronicBooksByFilters(BookSort sorting,
              string searchTermTitle,
              string[] rarities,
              string[] geners);

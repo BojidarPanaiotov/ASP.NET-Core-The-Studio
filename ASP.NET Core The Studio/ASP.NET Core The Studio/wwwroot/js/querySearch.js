@@ -2,7 +2,7 @@
     api: 'api/electronic-books',
     bookRarity: 'book-rarity',
     books: 'books',
-    test: 'test',
+    filtered: 'filtered-by-search-term-gener-category-rarity',
 }
 
 let rarityCheckboxes = document.getElementsByClassName('book_rarity');
@@ -14,9 +14,8 @@ let queryString = '';
 
 //Search Bar
 searchBar.addEventListener('keyup', (event) => {
-    if (event.keyCode >= 65 &&
-        event.keyCode <= 90 &&
-        searchBar.value.length > 2) {
+    if (searchBar.value.length > 2 &&
+        (event.keyCode >= 65 && event.keyCode <= 90)) {
         queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
         replaceWithQueryListBooks(bookWrapper, queryString);
     }
@@ -29,7 +28,7 @@ document.getElementById('filtering_searching_managing').addEventListener('change
 })
 
 function replaceWithQueryListBooks(wrapper, queryString) {
-    let apiRout = `${apiRoutes.api}/${apiRoutes.test}?${queryString}`;
+    let apiRout = `${apiRoutes.api}/${apiRoutes.filtered}?${queryString}`;
     console.log(apiRout);
     fetch(apiRout)
         .then(response => response.json())
@@ -70,7 +69,9 @@ function getQueryStringFromCheckboxes(checkboxCollection, checkboxType) {
 function getQueryFromSearchTerm(searchBar) {
     let result = '';
 
-    result += `${searchBar.getAttribute("name")}=${searchBar.value.toLowerCase()}&`;
+    if (searchBar.value.length > 2) {
+        result += `${searchBar.getAttribute("name")}=${searchBar.value.toLowerCase()}&`;
+    }
 
     return result;
 }

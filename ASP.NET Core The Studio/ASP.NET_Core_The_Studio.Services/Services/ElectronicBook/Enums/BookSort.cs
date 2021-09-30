@@ -1,4 +1,4 @@
-﻿namespace ASP.NET_Core_The_Studio.Services.ElectronicBook.Models
+﻿namespace ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums
 {
     public enum BookSort
     {

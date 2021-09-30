@@ -6,6 +6,8 @@
     using ASP.NET_Core_The_Studio.Models;
     using ASP.NET_Core_The_Studio.Models.SearchQueryModels;
     using ASP.NET_Core_The_Studio.Models.ViewModels;
+    using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
+    using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using AutoMapper;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,6 +18,15 @@
         {
             CreateMap<ElectronicBook, ElectronicBookViewModel>();
             CreateMap<ElectronicBook, ElectronicBook>();
+            CreateMap<ElectronicBook, ElectronicBookServiceModel>()
+                .ForMember(x => x.Geners,
+                opt => opt.MapFrom(
+                    src => src.ElectronicBookGener.Select(x => new GenerServiceModel
+                    {
+                        Id = x.Gener.Id,
+                        Name = x.Gener.Name
+                    }))); ;
+
             CreateMap<ElectronicBook, ElectronicBookApiModel>()
                 .ForMember(x => x.Geners,
                 opt => opt.MapFrom(
@@ -24,6 +35,7 @@
                         Id = x.Gener.Id,
                         Name = x.Gener.Name
                     })));
+
             CreateMap<ElectronicBook, ElectronicBookQueryModel>()
                 .ForMember(x => x.Geners,
                 opt => opt.MapFrom(
