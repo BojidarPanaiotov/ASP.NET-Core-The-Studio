@@ -1,0 +1,35 @@
+﻿@model ElectronicBookServiceModel
+
+<blockquote class="blockquote">
+    <h1 class="mb-0">@Model.Title</h1>
+    <footer class="blockquote-footer">written by <cite title="Source Title">@Model.Author</cite></footer>
+</blockquote>
+<div class="row mr-5">
+    <div class="col-md-8">
+        <img src="https://m.media-amazon.com/images/I/41gS+bWw3XL.jpg" class="img-fluid" alt="Responsive image">
+    </div>
+    <div class="col-md-4 border border-secondary mx-auto">
+        <h3 class="my-3">Description:</h3>
+        <h3 class="my-3">@Model.Description</h3>
+        <p style="word-wrap:break-word"></p>
+        <h3 class="my-3">Other Details</h3>
+        <ul>
+            <li>
+                Pages: @Model.Pages
+            </li>
+            <li>
+                Rarity: @Model.BookRarityName
+            </li>
+            <li>
+                Gener: @string.Join(',', Model.Geners.Select(x => x.Name))
+            </li>
+            <li>
+                CopySold: @Model.CopySold
+            </li>
+            <li>
+                Published On: @Model.CreatedOn.ToShortDateString()
+            </li>
+        </ul>
+    </div>
+    <div class="display-4 mt-4">Price: BGN @Model.Price</div>
+</div>
