@@ -2,6 +2,7 @@
 {
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
+    using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using System.Collections.Generic;
 
     public interface IElectronicBookService
@@ -34,9 +35,10 @@
             string eBookId);
         void Delete(string id);
         void Details(string id);
-        IEnumerable<ElectronicBookServiceModel> GetElectronicBooksByFilters(BookSort sorting,
+        ListingElectronicBooksServiceModel GetElectronicBooksByFilters(BookSort sorting,
              string searchTermTitle,
              string[] rarities,
-             string[] geners);
+             string[] geners,
+             int currentPage);
     }
 }

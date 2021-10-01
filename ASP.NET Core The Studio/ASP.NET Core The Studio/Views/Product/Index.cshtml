@@ -99,12 +99,15 @@
     }
 </div>
 <div id="pagination">
-    <a><i class="fa fa-angle-double-left"></i></a>
-    @for (int i = 1; i <= Math.Ceiling(Model.ElectronicBooks.Count / 8.0); i++)
+    <input id="currentPage" hidden value="1" />
+    <input id="maxPage" hidden value="@Math.Ceiling((double)Model.TotalBooks / 8)" />
+    <input id="minPage" hidden value="1" />
+    <a><i class="fa fa-angle-double-left" hidden id="minPageBtn"></i></a>
+    @for (int i = 1; i <= Math.Ceiling(Model.TotalBooks / 8.0); i++)
     {
-        <a class="@(i == 1 ? "current-page" : "")">@i</a>
+    <a class="@(i == 1 ? "current-page" : "") pageNumer" id="@i">@i</a>
     }
-    <a><i class="fa fa-angle-double-right"></i></a>
+    <a><i class="fa fa-angle-double-right" id="maxPageBtn"></i></a>
 </div>
 
 @* Filtering functionality *@

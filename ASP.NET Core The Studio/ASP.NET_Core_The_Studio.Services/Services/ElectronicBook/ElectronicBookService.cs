@@ -3,6 +3,7 @@
     using ASP.NET_Core_The_Studio.Data;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
+    using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
@@ -116,10 +117,11 @@
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ElectronicBookServiceModel> GetElectronicBooksByFilters(BookSort sorting,
+        public ListingElectronicBooksServiceModel GetElectronicBooksByFilters(BookSort sorting,
             string searchTermTitle,
             string[] rarities,
-            string[] geners)
+            string[] geners,
+            int currentPage)
         {
             var query = this.context.ElectronicBooks
                 .Include(eb => eb.BookRarity)
@@ -147,9 +149,19 @@
                 };
             }
 
-            var books = query.ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider);
+            var totalPages = query.Count();
 
-            return books;
+            var books = query
+                .Skip((currentPage - 1) * 8)
+                .Take(ElectronicBookServiceModel.booksPerPage)
+                .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+                .ToList();
+
+            return new ListingElectronicBooksServiceModel
+            {
+                TotalPages = totalPages,
+                Books = books
+            };
         }
     }
 }

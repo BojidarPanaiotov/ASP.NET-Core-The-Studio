@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     public class SearchQueryModel
     {
+        public int TotalBooks { get; set; }
+
         public List<BookRarityQueryModel> BookRarities { get; init; }
         public List<ElectronicBookQueryModel> ElectronicBooks { get; init; }
         public List<GenerQueryModel> Geners { get; init; }

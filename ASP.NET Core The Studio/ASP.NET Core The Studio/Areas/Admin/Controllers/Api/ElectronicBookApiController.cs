@@ -5,6 +5,7 @@
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
+    using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -37,20 +38,20 @@
 
         [HttpGet]
         [Route("filtered-by-search-term-gener-category-rarity")]
-        public IEnumerable<ElectronicBookServiceModel> Test(
+        public ListingElectronicBooksServiceModel Test(
             [FromQuery] string searchTermTitle,
             [FromQuery] int sorting,
             [FromQuery] string[] rarities,
-            [FromQuery] string[] geners)
+            [FromQuery] string[] geners,
+            [FromQuery] int currentPage)
         {
             //TODO: Return API model not service
             var bookSort = (BookSort)sorting;
 
             var books = this.electronicBookService
-                .GetElectronicBooksByFilters(bookSort, searchTermTitle, rarities, geners)
-                .ToList();
+                .GetElectronicBooksByFilters(bookSort, searchTermTitle, rarities, geners, currentPage);
 
-            BookLogger(books);
+            BookLogger(books.Books.ToList());
             //Console.Clear();
 
             return books;
