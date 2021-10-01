@@ -93,7 +93,7 @@
                 <p class="card-text">Rarity: @eBook.BookRarityName</p>
                 <p class="card-text">Geners: @string.Join(',', eBook.Geners.Select(x => x.Name))</p>
                 <a href="#" class="btn btn-primary mb-3">Buy for @eBook.Price BGN</a>
-                <a href="#" class="btn btn-primary mb-3">View More</a>
+                <a class="btn btn-primary" asp-route-eBookId="@eBook.Id" asp-controller="Product" asp-action="Details">View More</a>
             </div>
         </div>
     }

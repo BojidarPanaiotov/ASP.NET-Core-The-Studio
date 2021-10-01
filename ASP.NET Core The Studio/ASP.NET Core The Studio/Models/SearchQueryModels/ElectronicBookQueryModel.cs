@@ -5,7 +5,7 @@
 
     public class ElectronicBookQueryModel
     {
-        public string Id { get; init; } = Guid.NewGuid().ToString();
+        public string Id { get; init; }
 
         public string Title { get; set; }
 

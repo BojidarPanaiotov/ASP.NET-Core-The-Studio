@@ -57,9 +57,12 @@
 
         public ElectronicBookServiceModel GetById(string id)
             => this.context.ElectronicBooks
-            .Where(eb => eb.Id == id)
-            .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
-            .FirstOrDefault();
+                       .Include(user => user.ElectronicBookGener)
+                       .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+                       .Where(eb => eb.Id == id)
+                       .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+                       .FirstOrDefault();
+
 
         public ElectronicBookServiceModel GetByTitle(string title)
             => this.context.ElectronicBooks

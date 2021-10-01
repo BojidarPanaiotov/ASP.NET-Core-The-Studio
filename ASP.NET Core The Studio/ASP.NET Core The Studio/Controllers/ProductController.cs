@@ -3,15 +3,19 @@
     using ASP.NET_Core_The_Studio.Models;
     using ASP.NET_Core_The_Studio.Models.SearchQueryModels;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
 
     public class ProductController : Controller
     {
         private readonly IElectronicBookService electronicBookService;
-        public ProductController(IElectronicBookService electronicBookService)
+        private readonly IMapper mapper;
+        public ProductController(IElectronicBookService electronicBookService,
+            IMapper mapper)
         {
             this.electronicBookService = electronicBookService;
+            this.mapper = mapper;
         }
         [HttpGet]
         public IActionResult Index()
@@ -27,6 +31,13 @@
             };
 
             return View(result);
+        }
+        [HttpGet]
+        public IActionResult Details(string eBookId)
+        {
+            var serviceBookModel = this.electronicBookService.GetById(eBookId);
+
+            return View(serviceBookModel);
         }
     }
 }

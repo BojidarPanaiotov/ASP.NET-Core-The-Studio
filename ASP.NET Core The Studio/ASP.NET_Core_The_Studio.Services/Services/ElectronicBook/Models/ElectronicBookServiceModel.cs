@@ -8,6 +8,8 @@
     {
         public const int booksPerPage = 8;
 
+        public string Id { get; set; }
+
         public string Title { get; set; }
 
         public string Description { get; set; }
