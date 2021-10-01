@@ -51,7 +51,7 @@
                 .ToList();
 
             BookLogger(books);
-            Console.Clear();
+            //Console.Clear();
 
             return books;
         }

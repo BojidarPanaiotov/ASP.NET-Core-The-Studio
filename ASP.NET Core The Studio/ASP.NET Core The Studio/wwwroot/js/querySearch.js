@@ -1,4 +1,4 @@
-﻿const { start } = require("@popperjs/core");
+﻿//const { start } = require("@popperjs/core");
 
 const apiRoutes = {
     api: 'api/electronic-books',
@@ -55,7 +55,7 @@ function replaceWithQueryListBooks(wrapper, queryString) {
             });
 
             wrapper.innerHTML = booksHtml;
-            pagination.innerHTML = buildPaginationHtml(bookData.count(), 1);
+            pagination.innerHTML = buildPaginationHtml(bookData.length, 1);
         });
 }
 
