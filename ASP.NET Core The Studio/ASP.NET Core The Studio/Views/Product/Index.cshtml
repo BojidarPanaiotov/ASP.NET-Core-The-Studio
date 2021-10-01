@@ -98,6 +98,15 @@
         </div>
     }
 </div>
+<div id="pagination">
+    <a><i class="fa fa-angle-double-left"></i></a>
+    @for (int i = 1; i <= Math.Ceiling(Model.ElectronicBooks.Count / 8.0); i++)
+    {
+        <a class="@(i == 1 ? "current-page" : "")">@i</a>
+    }
+    <a><i class="fa fa-angle-double-right"></i></a>
+</div>
+
 @* Filtering functionality *@
 <script src="~/js/querySearch.js"></script>
 

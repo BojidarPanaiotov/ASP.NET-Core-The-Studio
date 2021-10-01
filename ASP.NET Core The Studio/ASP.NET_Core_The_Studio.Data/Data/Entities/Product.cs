@@ -2,7 +2,9 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using static Data.EntitiesConstants.Product;
+
+    using static ASP.NET_Core_The_Studio.Data.EntitiesConstants.Product;
+
     public abstract class Product
     {
         public string Id { get; init; } = Guid.NewGuid().ToString();

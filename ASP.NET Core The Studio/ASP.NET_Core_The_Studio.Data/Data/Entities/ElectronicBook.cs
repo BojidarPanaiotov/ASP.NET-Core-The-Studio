@@ -2,7 +2,8 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static Data.EntitiesConstants.ElectronicBook;
+
+    using static ASP.NET_Core_The_Studio.Data.EntitiesConstants.ElectronicBook;
     //TODO: Add property for word count
     public class ElectronicBook : Product
     {

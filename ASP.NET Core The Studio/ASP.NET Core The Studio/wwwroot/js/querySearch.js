@@ -1,4 +1,6 @@
-﻿const apiRoutes = {
+﻿const { start } = require("@popperjs/core");
+
+const apiRoutes = {
     api: 'api/electronic-books',
     bookRarity: 'book-rarity',
     books: 'books',
@@ -10,6 +12,7 @@ let generCheckboxes = document.getElementsByClassName('book_gener');
 let searchBar = document.getElementById('searchBar');
 let selectElement = document.getElementById('book-sorting');
 let bookWrapper = document.getElementById('all_electronic_books');
+let pagination = document.getElementById('pagination');
 let queryString = '';
 
 //Search Bar
@@ -17,6 +20,7 @@ searchBar.addEventListener('keyup', (event) => {
     if (searchBar.value.length > 2) {
         queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
         replaceWithQueryListBooks(bookWrapper, queryString);
+        window.location.hash = queryString;
     }
 })
 
@@ -24,6 +28,7 @@ searchBar.addEventListener('keyup', (event) => {
 document.getElementById('filtering_searching_managing').addEventListener('change', () => {
     queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
     replaceWithQueryListBooks(bookWrapper, queryString);
+    window.location.hash = queryString;
 })
 
 function replaceWithQueryListBooks(wrapper, queryString) {
@@ -50,7 +55,56 @@ function replaceWithQueryListBooks(wrapper, queryString) {
             });
 
             wrapper.innerHTML = booksHtml;
+            pagination.innerHTML = buildPaginationHtml(bookData.count(), 1);
         });
+}
+
+function buildPaginationHtml(bookCount, currentPage) {
+    let previousPage = currentPage - 1;
+
+    if (previousPage == 0) {
+        previousPage = 1;
+    }
+
+    let maxPage = Math.ceil(bookCount / 8);
+    let startPage = currentPage - 5;
+
+    if (startPage < 0) {
+        startPage = 1;
+    } else if (startPage + 4 > maxPage) {
+        startPage = maxPage - 4;
+    } else {
+        startPage = currentPage;
+    }
+
+    let endPage = 0;
+
+    if (startPage + 4 > maxPage) {
+        endPage = maxPage;
+    } else {
+        endPage = startPage + 4;
+    }
+
+    let paginationHtml = '';
+
+    if (currentPage != 1) {
+        paginationHtml +=
+            '<a><i class="fa fa-angle-double-left"></i></a>';
+    }
+
+    for (let i = previousPage; i <= endPage; i++) {
+        if (i == currentPage) {
+            paginationHtml += `<a class="current-page">${i}</a>`;
+        } else {
+            paginationHtml += `<a>${i}</a>`;
+        }
+    }
+
+    if (!(currentPage == maxPage) && currentPage != 0 && maxPage != 0) {
+        paginationHtml += '<a><i class="fa fa-angle-double-right"></i></a>';
+    }
+
+    return paginationHtml;
 }
 
 function getQueryStringFromCheckboxes(checkboxCollection, checkboxType) {
