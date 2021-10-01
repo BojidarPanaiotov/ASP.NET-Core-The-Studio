@@ -1,0 +1,52 @@
+﻿<div class="text-center">
+    <h1>Win random book</h1>
+
+    <p class="mt-5 mb-5" id="random-book-title">Book name here</p>
+
+    <button class="btn btn-primary" onclick="GetBooks()" id="play-button">Play</button>
+</div>
+
+<script>
+    let pElement = document.getElementById('random-book-title');
+    let playBtn = document.getElementById('play-button');
+    let intervalId = null;
+    function GetBooks() {
+        fetch('api/electronic-books/books')
+            .then(response => response.json())
+            .then(books => {
+                if (playBtn.textContent == 'Stop') {
+                    clearInterval(intervalId);
+                    playBtn.textContent = 'Play'
+                    return;
+                }
+                intervalId = setInterval(() => {
+                    let randomIndex = getRandomNumber(books.length);
+                    let randomBook = books[randomIndex];
+
+                    pElement.textContent = randomBook.title;
+                    let bookRarity = randomBook.bookRarityName;
+                    console.log(bookRarity)
+                    if (bookRarity == 'Common') {
+                        pElement.style.background = 'red';
+                    } else if (bookRarity == 'Rare') {
+                        pElement.style.background = 'green';
+                    } else {
+                        pElement.style.background = 'orange';
+                    }
+                }, 100);
+
+                playBtn.textContent = 'Stop';
+            });
+    }
+
+    function GetCurrentBook() {
+
+    }
+
+    function getRandomNumber(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+
+
+</script>

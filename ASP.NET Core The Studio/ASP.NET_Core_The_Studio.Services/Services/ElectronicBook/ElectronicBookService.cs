@@ -9,7 +9,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using _ElectronicBook = Data.Entities.ElectronicBook;
 
     public class ElectronicBookService : IElectronicBookService
@@ -22,7 +21,58 @@
             this.context = context;
             this.mapper = mapper;
         }
-        public async Task Create(string title,
+
+        public IEnumerable<T> GetAllElectronicBooks<T>()
+            => this.context.ElectronicBooks
+                       .ProjectTo<T>(this.mapper.ConfigurationProvider)
+                       .ToList();
+
+        public IEnumerable<T> GetElectronicBooksWithGeners<T>()
+            => this.context
+                .ElectronicBooks
+                .Include(user => user.ElectronicBookGener)
+                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+                .ProjectTo<T>(this.mapper.ConfigurationProvider)
+                .ToList();
+
+        public IEnumerable<T> GetAllElectronicBooksByAuthor<T>(string authorName)
+            => this.context
+            .ElectronicBooks
+            .Where(x => x.Author.ToLower() == authorName)
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .ToList();
+
+        public IEnumerable<T> GetAllRarities<T>()
+            => this.context
+            .BookRarities
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .ToList();
+
+        public IEnumerable<T> GetAllGeners<T>()
+            => this.context
+            .Geners
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .ToList();
+
+        public ElectronicBookServiceModel GetById(string id)
+            => this.context.ElectronicBooks
+            .Where(eb => eb.Id == id)
+            .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+            .FirstOrDefault();
+
+        public ElectronicBookServiceModel GetByTitle(string title)
+            => this.context.ElectronicBooks
+            .Where(eb => eb.Title.ToLower() == title.ToLower())
+            .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+            .FirstOrDefault();
+
+        public ElectronicBookServiceModel GetByAuthor(string authorName)
+            => this.context.ElectronicBooks
+            .Where(eb => eb.Author.ToLower() == authorName.ToLower())
+            .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+            .FirstOrDefault();
+
+        public void Create(string title,
             string author,
             decimal price,
             byte[] coverImage,
@@ -47,96 +97,43 @@
                 Data = data
             };
 
-            await this.context.ElectronicBooks.AddAsync(electronicBook);
+            this.context.ElectronicBooks.Add(electronicBook);
             this.context.SaveChanges();
         }
 
-        public async Task Delete(string id)
+        public void Update(ElectronicBookServiceModel eBookModel, string eBookId)
         {
-            var electronicBook = await this.context
-                .ElectronicBooks
-                .FirstOrDefaultAsync(x => x.Id == id);
-
-            this.context.Remove(electronicBook);
-            await this.context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public ElectronicBookDetailsServiceModel Details(string id)
+        public void Delete(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAllElectronicBooksWithGeners<T>()
-            => this.context
-                .ElectronicBooks
-                .Include(user => user.ElectronicBookGener)
-                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
-                .ProjectTo<T>(this.mapper.ConfigurationProvider)
-                .ToList();
-        public IEnumerable<T> GetAllElectronicBooks<T>()
-            => this.context
-                .ElectronicBooks
-                .ProjectTo<T>(this.mapper.ConfigurationProvider)
-                .ToList();
-        public async Task<IEnumerable<T>> GetAllElectronicBooksByAuthor<T>(string authorName)
-            => await this.context
-            .ElectronicBooks
-            .Where(x => x.Author.ToLower() == authorName)
-            .ProjectTo<T>(this.mapper.ConfigurationProvider)
-            .ToListAsync();
-
-        public Task<IEnumerable<T>> GetAllByCategory<T>()
+        public void Details(string id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAllRarities<T>()
-            => this.context
-            .BookRarities
-            .ProjectTo<T>(this.mapper.ConfigurationProvider)
-            .ToList();
-
-        public IEnumerable<T> GetAllGeners<T>()
-            => this.context
-            .Geners
-            .ProjectTo<T>(this.mapper.ConfigurationProvider)
-            .ToList();
-
-        public ElectronicBookServiceModel GetByAuthor(string authorName)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public ElectronicBookServiceModel GetById(string id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public ElectronicBookServiceModel GetByTitle(string title)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Update(ElectronicBookServiceModel eBookModel, string eBookId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<ElectronicBookServiceModel> GetElectronicBooksByFilters(BookSort sorting, string searchTermTitle, string[] rarities, string[] geners)
+        public IEnumerable<ElectronicBookServiceModel> GetElectronicBooksByFilters(BookSort sorting,
+            string searchTermTitle,
+            string[] rarities,
+            string[] geners)
         {
             var query = this.context.ElectronicBooks
                 .Include(eb => eb.BookRarity)
                 .Include(user => user.ElectronicBookGener)
                 .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
-                .Where(eb => rarities.Contains(eb.BookRarity.Name.ToLower()) || !rarities.Any())
-                .Where(eb => eb.ElectronicBookGener.Any(x => geners.Contains(x.Gener.Name)) || !geners.Any())
+                .Where(eb => !rarities.Any() || rarities.Contains(eb.BookRarity.Name.ToLower()))
+                .Where(eb => !geners.Any() || eb.ElectronicBookGener.Any(x => geners.Contains(x.Gener.Name)))
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchTermTitle))
             {
                 query = query.Where(eb => eb.Title.ToLower().Contains(searchTermTitle));
             }
-            if (sorting != BookSort.All)
+            if (sorting != BookSort.None)
             {
                 query = sorting switch
                 {
@@ -146,11 +143,13 @@
                     BookSort.DateDescending => query.OrderByDescending(x => x.CreatedOn),
                     BookSort.Title => query.OrderBy(x => x.Title),
                     BookSort.TitleDescending => query.OrderByDescending(x => x.Title),
-                    BookSort.All or _ => query.OrderBy(x => x.Id)
+                    BookSort.None or _ => query.OrderBy(x => x.Id)
                 };
             }
 
-            return query.ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider).ToList();
+            var books = query.ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider);
+
+            return books;
         }
     }
 }

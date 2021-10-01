@@ -8,9 +8,11 @@
     {
         private readonly IEmailSender emailSender;
 
-        public ContactController(IEmailSender emailSender) => this.emailSender = emailSender;
+        public ContactController(IEmailSender emailSender) 
+            => this.emailSender = emailSender;
 
-        public IActionResult Index() => View();
+        public IActionResult Index() 
+            => View();
 
         [HttpPost]
         public IActionResult Index(FeedbackFormModel feedback)

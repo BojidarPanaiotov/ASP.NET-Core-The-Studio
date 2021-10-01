@@ -32,7 +32,7 @@
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(ElectronicBookFormModel eBook, IFormFile bookData, IFormFile bookCoverImage)
+        public IActionResult Create(ElectronicBookFormModel eBook, IFormFile bookData, IFormFile bookCoverImage)
         {
             //TODO: Restrict only for PDF files (or other book formats included)
             //TODO: Think for a way to get pages count from the book
@@ -45,7 +45,7 @@
             bookCoverImage.CopyTo(ms);
             var coverImageBytes = ms.ToArray();
 
-            await electronicBookService.Create(
+            electronicBookService.Create(
                 eBook.Title,
                 eBook.Author,
                 eBook.Price,
@@ -61,7 +61,7 @@
         [Authorize]
         [HttpGet]
         public IActionResult All()
-            =>View(this.electronicBookService.GetAllElectronicBooksWithGeners<ElectronicBookViewModel>());
+            =>View(this.electronicBookService.GetElectronicBooksWithGeners<ElectronicBookViewModel>());
         
 
         [Authorize]
@@ -78,9 +78,9 @@
         }
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
-            await this.electronicBookService.Delete(id);
+            this.electronicBookService.Delete(id);
 
             return RedirectToAction(nameof(ElectronicBookController.All),
                 nameof(ElectronicBookController).Replace("Controller", ""));

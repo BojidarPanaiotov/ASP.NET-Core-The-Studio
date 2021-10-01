@@ -79,8 +79,6 @@
         </div>
     </div>
 </div>
-
-
 @* EBook products *@
 <div class="row mt-5" id="all_electronic_books">
     @foreach (var eBook in Model.ElectronicBooks)
@@ -95,10 +93,11 @@
                 <p class="card-text">Rarity: @eBook.BookRarityName</p>
                 <p class="card-text">Geners: @string.Join(',', eBook.Geners.Select(x => x.Name))</p>
                 <a href="#" class="btn btn-primary mb-3">Buy for @eBook.Price BGN</a>
+                <a href="#" class="btn btn-primary mb-3">View More</a>
             </div>
         </div>
     }
 </div>
-@* Checkboxes book rarity functionality *@
+@* Filtering functionality *@
 <script src="~/js/querySearch.js"></script>
 

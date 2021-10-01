@@ -2,7 +2,7 @@
 {
     public enum BookSort
     {
-        All = 1,
+        None = 1,
         Date = 2,
         DateDescending = 3,
         Price = 4,

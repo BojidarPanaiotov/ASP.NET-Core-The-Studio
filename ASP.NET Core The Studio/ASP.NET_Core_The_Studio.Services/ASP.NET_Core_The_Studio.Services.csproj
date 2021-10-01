@@ -12,4 +12,8 @@
     <ProjectReference Include="..\ASP.NET_Core_The_Studio.Data\ASP.NET_Core_The_Studio.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\UserService\Models\" />
+  </ItemGroup>
+
 </Project>

@@ -31,7 +31,7 @@
             => this.electronicBookService.GetAllRarities<BookRarityApiModel>();
 
         [HttpGet]
-        [Route("books")]
+        [Route("books")] 
         public IEnumerable<ElectronicBookApiModel> GetElectronicBooks()
             => this.electronicBookService.GetAllElectronicBooks<ElectronicBookApiModel>();
 

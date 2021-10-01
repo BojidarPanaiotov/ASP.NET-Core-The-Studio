@@ -7,7 +7,5 @@
         public List<BookRarityQueryModel> BookRarities { get; init; }
         public List<ElectronicBookQueryModel> ElectronicBooks { get; init; }
         public List<GenerQueryModel> Geners { get; init; }
-        public string SearchTerm { get; set; }
-
     }
 }

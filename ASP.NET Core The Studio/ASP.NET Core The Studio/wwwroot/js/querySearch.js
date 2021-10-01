@@ -14,8 +14,7 @@ let queryString = '';
 
 //Search Bar
 searchBar.addEventListener('keyup', (event) => {
-    if (searchBar.value.length > 2 &&
-        (event.keyCode >= 65 && event.keyCode <= 90)) {
+    if (searchBar.value.length > 2) {
         queryString = buildQueryString(searchBar, rarityCheckboxes, generCheckboxes);
         replaceWithQueryListBooks(bookWrapper, queryString);
     }
