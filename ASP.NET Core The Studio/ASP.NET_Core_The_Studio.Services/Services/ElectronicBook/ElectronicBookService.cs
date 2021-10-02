@@ -23,57 +23,44 @@
             this.mapper = mapper;
         }
 
-        public IEnumerable<T> GetAllElectronicBooks<T>()
+        public IEnumerable<T> GetAll<T>()
             => this.context.ElectronicBooks
-                       .ProjectTo<T>(this.mapper.ConfigurationProvider)
-                       .ToList();
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .ToList();
 
-        public IEnumerable<T> GetElectronicBooksWithGeners<T>()
+        public IEnumerable<T> GetAllWithGeners<T>()
             => this.context
-                .ElectronicBooks
-                .Include(user => user.ElectronicBookGener)
-                .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
-                .ProjectTo<T>(this.mapper.ConfigurationProvider)
-                .ToList();
+            .ElectronicBooks
+            .Include(user => user.ElectronicBookGener)
+            .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .ToList();
 
-        public IEnumerable<T> GetAllElectronicBooksByAuthor<T>(string authorName)
+        public IEnumerable<T> GetAllByAuthor<T>(string authorName)
             => this.context
             .ElectronicBooks
             .Where(x => x.Author.ToLower() == authorName)
             .ProjectTo<T>(this.mapper.ConfigurationProvider)
             .ToList();
 
-        public IEnumerable<T> GetAllRarities<T>()
-            => this.context
-            .BookRarities
-            .ProjectTo<T>(this.mapper.ConfigurationProvider)
-            .ToList();
-
-        public IEnumerable<T> GetAllGeners<T>()
-            => this.context
-            .Geners
-            .ProjectTo<T>(this.mapper.ConfigurationProvider)
-            .ToList();
-
-        public ElectronicBookServiceModel GetById(string id)
+        public T GetById<T>(string id)
             => this.context.ElectronicBooks
-                       .Include(user => user.ElectronicBookGener)
-                       .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
-                       .Where(eb => eb.Id == id)
-                       .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
-                       .FirstOrDefault();
-
-
-        public ElectronicBookServiceModel GetByTitle(string title)
-            => this.context.ElectronicBooks
-            .Where(eb => eb.Title.ToLower() == title.ToLower())
-            .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+            .Include(user => user.ElectronicBookGener)
+            .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
+            .Where(eb => eb.Id == id)
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
             .FirstOrDefault();
 
-        public ElectronicBookServiceModel GetByAuthor(string authorName)
+        public T GetByTitle<T>(string title)
+            => this.context.ElectronicBooks
+            .Where(eb => eb.Title.ToLower() == title.ToLower())
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
+            .FirstOrDefault();
+
+        public T GetByAuthor<T>(string authorName)
             => this.context.ElectronicBooks
             .Where(eb => eb.Author.ToLower() == authorName.ToLower())
-            .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
+            .ProjectTo<T>(this.mapper.ConfigurationProvider)
             .FirstOrDefault();
 
         public void Create(string title,
@@ -112,7 +99,11 @@
 
         public void Delete(string id)
         {
-            throw new NotImplementedException();
+            this.context.ElectronicBooks
+                .Remove(this.context.ElectronicBooks
+                .Find(id));
+
+            this.context.SaveChanges();
         }
 
         public void Details(string id)

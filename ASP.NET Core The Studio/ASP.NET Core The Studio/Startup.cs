@@ -5,6 +5,8 @@ namespace ASP.NET_Core_The_Studio
     using ASP.NET_Core_The_Studio.Infrastructure.Extensions;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using ASP.NET_Core_The_Studio.Services.EmailSender;
+    using ASP.NET_Core_The_Studio.Services.Services.Gener;
+    using ASP.NET_Core_The_Studio.Services.Services.Rarity;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -28,7 +30,7 @@ namespace ASP.NET_Core_The_Studio
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => 
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireLowercase = false;
@@ -43,6 +45,8 @@ namespace ASP.NET_Core_The_Studio
             services.AddControllersWithViews();
 
             services.AddTransient<IElectronicBookService, ElectronicBookService>();
+            services.AddTransient<IRarityService, RarityService>();
+            services.AddTransient<IGenerService, GenerService>();
             services.AddTransient<IEmailSender, EmailSender>();
         }
 

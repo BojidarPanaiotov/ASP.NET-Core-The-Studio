@@ -1,6 +1,4 @@
-﻿//const { start } = require("@popperjs/core");
-
-const apiRoutes = {
+﻿const apiRoutes = {
     api: 'api/electronic-books',
     bookRarity: 'book-rarity',
     books: 'books',
@@ -95,6 +93,55 @@ function replaceWithQueryListBooks(wrapper, queryString) {
         });
 }
 
+
+function getQueryStringFromCheckboxes(checkboxCollection, checkboxType) {
+    var result = '';
+
+    for (let checkbox of checkboxCollection) {
+        if (checkbox.checked) {
+            result += `${checkboxType}=${checkbox.name.trimEnd()}&`;
+        }
+    }
+
+    return result;
+}
+
+function getQueryFromSearchTerm(searchBar) {
+    let result = '';
+
+    if (searchBar.value.length > 2) {
+        result += `${searchBar.getAttribute("name")}=${searchBar.value.toLowerCase()}&`;
+    }
+
+    return result;
+}
+
+function getQueryStringFromSortingList(selectElement) {
+    let selectedOption = selectElement.options[selectElement.selectedIndex].value;
+
+    let result = '';
+
+    result += `sorting=${selectedOption}&`;
+
+    return result;
+}
+
+function getQueryStringFromPagination(currentPage) {
+    return `currentPage=${document.getElementById('currentPage').value}`;
+}
+
+function buildQueryString(searchBar, rarityCheckboxes, generCheckboxes, currentPage) {
+    let result = '';
+
+    result += getQueryFromSearchTerm(searchBar);
+    result += getQueryStringFromCheckboxes(rarityCheckboxes, 'rarities');
+    result += getQueryStringFromCheckboxes(generCheckboxes, 'geners');
+    result += getQueryStringFromSortingList(selectElement);
+    result += getQueryStringFromPagination(currentPage);
+
+    return result;
+}
+
 function buildPaginationHtml(bookCount, currentPage) {
     let previousPage = currentPage - 1;
 
@@ -144,52 +191,4 @@ function buildPaginationHtml(bookCount, currentPage) {
     }
 
     return paginationHtml;
-}
-
-function getQueryStringFromCheckboxes(checkboxCollection, checkboxType) {
-    var result = '';
-
-    for (let checkbox of checkboxCollection) {
-        if (checkbox.checked) {
-            result += `${checkboxType}=${checkbox.name.trimEnd()}&`;
-        }
-    }
-
-    return result;
-}
-
-function getQueryFromSearchTerm(searchBar) {
-    let result = '';
-
-    if (searchBar.value.length > 2) {
-        result += `${searchBar.getAttribute("name")}=${searchBar.value.toLowerCase()}&`;
-    }
-
-    return result;
-}
-
-function getQueryStringFromSortingList(selectElement) {
-    let selectedOption = selectElement.options[selectElement.selectedIndex].value;
-
-    let result = '';
-
-    result += `sorting=${selectedOption}&`;
-
-    return result;
-}
-
-function getQueryStringFromPagination(currentPage) {
-    return `currentPage=${document.getElementById('currentPage').value}`;
-}
-
-function buildQueryString(searchBar, rarityCheckboxes, generCheckboxes, currentPage) {
-    let result = '';
-
-    result += getQueryFromSearchTerm(searchBar);
-    result += getQueryStringFromCheckboxes(rarityCheckboxes, 'rarities');
-    result += getQueryStringFromCheckboxes(generCheckboxes, 'geners');
-    result += getQueryStringFromSortingList(selectElement);
-    result += getQueryStringFromPagination(currentPage);
-
-    return result;
 }

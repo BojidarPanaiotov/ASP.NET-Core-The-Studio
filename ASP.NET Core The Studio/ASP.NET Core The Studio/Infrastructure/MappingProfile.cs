@@ -9,9 +9,7 @@
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using AutoMapper;
-    using System.Collections.Generic;
     using System.Linq;
-
     public class MappingProfile : Profile
     {
         public MappingProfile()
@@ -57,7 +55,7 @@
             CreateMap<BookRarity, BookRarityApiModel>();
 
             CreateMap<Gener, GenerQueryModel>();
-            
+
         }
     }
 }

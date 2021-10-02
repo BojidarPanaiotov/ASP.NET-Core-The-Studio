@@ -7,22 +7,12 @@
 
     public interface IElectronicBookService
     {
-        //Done
-        IEnumerable<T> GetAllElectronicBooks<T>();
-        //Done
-        IEnumerable<T> GetElectronicBooksWithGeners<T>();
-        //Done
-        IEnumerable<T> GetAllElectronicBooksByAuthor<T>(string authorName);
-        //Done
-        IEnumerable<T> GetAllRarities<T>();
-        //Done
-        IEnumerable<T> GetAllGeners<T>();
-        //Done
-        ElectronicBookServiceModel GetById(string id);
-        //Done
-        ElectronicBookServiceModel GetByTitle(string title);
-        //Done
-        ElectronicBookServiceModel GetByAuthor(string authorName);
+        IEnumerable<T> GetAll<T>();
+        IEnumerable<T> GetAllWithGeners<T>();
+        IEnumerable<T> GetAllByAuthor<T>(string authorName);
+        T GetById<T>(string id);
+        T GetByTitle<T>(string title);
+        T GetByAuthor<T>(string authorName);
         void Create(string title,
             string author,
             decimal price,
@@ -31,8 +21,8 @@
             string bookRarityId,
             string description,
             string userId);
-        void Update(ElectronicBookServiceModel eBookModel,
-            string eBookId);
+        void Update(ElectronicBookServiceModel electronicBook,
+            string id);
         void Delete(string id);
         void Details(string id);
         ListingElectronicBooksServiceModel GetElectronicBooksByFilters(BookSort sorting,

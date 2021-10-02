@@ -1,40 +1,38 @@
 ﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Controllers.Api
 {
-    using ASP.NET_Core_The_Studio.Areas.Admin.Models;
     using ASP.NET_Core_The_Studio.Areas.Admin.Models.Books;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
     using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
-    using AutoMapper;
+    using ASP.NET_Core_The_Studio.Services.Services.Rarity;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     [Route("api/electronic-books")]
     [ApiController]
     public class ElectronicBookApiController : ControllerBase
     {
         private readonly IElectronicBookService electronicBookService;
-        private readonly IMapper mapper;
+        private readonly IRarityService rarityService;
 
         public ElectronicBookApiController(IElectronicBookService electronicBookService,
-            IMapper mapper)
+            IRarityService rarityService)
         {
             this.electronicBookService = electronicBookService;
-            this.mapper = mapper;
+            this.rarityService = rarityService;
         }
 
         [HttpGet]
         [Route("book-rarity")]
-        public IEnumerable<BookRarityApiModel> GetCategories()
-            => this.electronicBookService.GetAllRarities<BookRarityApiModel>();
+        public IEnumerable<BookRarityApiModel> GetRarities()
+            => this.rarityService.GetAll<BookRarityApiModel>();
 
         [HttpGet]
-        [Route("books")] 
+        [Route("books")]
         public IEnumerable<ElectronicBookApiModel> GetElectronicBooks()
-            => this.electronicBookService.GetAllElectronicBooks<ElectronicBookApiModel>();
+            => this.electronicBookService.GetAll<ElectronicBookApiModel>();
 
         [HttpGet]
         [Route("filtered-by-search-term-gener-category-rarity")]
@@ -51,9 +49,6 @@
             var books = this.electronicBookService
                 .GetElectronicBooksByFilters(bookSort, searchTermTitle, rarities, geners, currentPage);
 
-            BookLogger(books.Books.ToList());
-            //Console.Clear();
-
             return books;
         }
         private static void BookLogger(List<ElectronicBookServiceModel> books)
@@ -69,3 +64,9 @@
         }
     }
 }
+/*
+   Api routes:
+   api/electronic-books/book-rarity
+   api/electronic-books/books
+   api/electronic-books/filtered-by-search-term-gener-category-rarity TODO: Why is giving error? 
+*/
