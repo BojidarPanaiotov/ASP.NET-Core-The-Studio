@@ -2,8 +2,6 @@
 {
     using ASP.NET_Core_The_Studio.Models.ViewModels;
     using System.Collections.Generic;
-
-    //TODO: Rewrite this view model and set validations!!!
     public class ElectronicBookViewModel
     {
         public string Id { get; set; }

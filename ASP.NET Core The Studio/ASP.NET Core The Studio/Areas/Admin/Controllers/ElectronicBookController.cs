@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Mvc;
     using System.IO;
     using System.Linq;
-    using System.Threading.Tasks;
     public class ElectronicBookController : AdminController
     {
         private readonly ApplicationDbContext context;
@@ -61,8 +60,8 @@
         [Authorize]
         [HttpGet]
         public IActionResult All()
-            =>View(this.electronicBookService.GetAllWithGeners<ElectronicBookViewModel>());
-        
+            => View(this.electronicBookService.GetAllWithGeners<ElectronicBookViewModel>());
+
 
         [Authorize]
         [HttpGet]

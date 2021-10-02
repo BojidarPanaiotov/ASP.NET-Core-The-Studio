@@ -1,6 +1,6 @@
-﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Models.Books
+﻿namespace ASP.NET_Core_The_Studio.Models.Api
 {
-    public class BookGenerApiModel
+    public class GenerApiModel
     {
         public string Id { get; init; }
         public string Name { get; init; }

@@ -1,6 +1,6 @@
-﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Controllers.Api
+﻿namespace ASP.NET_Core_The_Studio.Controllers.Api
 {
-    using ASP.NET_Core_The_Studio.Areas.Admin.Models.Books;
+    using ASP.NET_Core_The_Studio.Models.Api;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
@@ -10,6 +10,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
     [Route("api/electronic-books")]
     [ApiController]
     public class ElectronicBookApiController : ControllerBase
@@ -26,8 +27,8 @@
 
         [HttpGet]
         [Route("book-rarity")]
-        public IEnumerable<BookRarityApiModel> GetRarities()
-            => this.rarityService.GetAll<BookRarityApiModel>();
+        public IEnumerable<RarityApiModel> GetRarities()
+            => this.rarityService.GetAll<RarityApiModel>();
 
         [HttpGet]
         [Route("books")]

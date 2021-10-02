@@ -1,4 +1,4 @@
-﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Models.Books
+﻿namespace ASP.NET_Core_The_Studio.Models.Api
 {
     using System;
     using System.Collections.Generic;
@@ -12,6 +12,6 @@
         public int Pages { get; set; }
         public int CopySold { get; set; }
         public string BookRarityName { get; set; }
-        public ICollection<BookGenerApiModel> Geners { get; init; }
+        public ICollection<GenerApiModel> Geners { get; init; }
     }
 }
