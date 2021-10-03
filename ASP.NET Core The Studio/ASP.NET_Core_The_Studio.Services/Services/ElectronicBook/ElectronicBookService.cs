@@ -113,24 +113,18 @@
             throw new NotImplementedException();
         }
 
-        public ListingElectronicBooksServiceModel GetElectronicBooksByFilters(BookSort sorting,
-            string searchTermTitle,
-            string[] rarities,
-            string[] geners,
-            int currentPage)
+        public ListingElectronicBooksServiceModel GetElectronicBooksByFilters(
+            BookSort sorting = BookSort.None,
+            string searchTermTitle = null,
+            string[] rarities = null,
+            string[] geners = null,
+            int currentPage = 1)
         {
             var query = this.context.ElectronicBooks
                 .Include(eb => eb.BookRarity)
                 .Include(user => user.ElectronicBookGener)
                 .ThenInclude(ElectronicBookGener => ElectronicBookGener.Gener)
-                .Where(eb => !rarities.Any() || rarities.Contains(eb.BookRarity.Name.ToLower()))
-                .Where(eb => !geners.Any() || eb.ElectronicBookGener.Any(x => geners.Contains(x.Gener.Name)))
                 .AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchTermTitle))
-            {
-                query = query.Where(eb => eb.Title.ToLower().Contains(searchTermTitle));
-            }
 
             if (sorting != BookSort.None)
             {
@@ -146,17 +140,34 @@
                 };
             }
 
-            var totalPages = query.Count();
+            if (!string.IsNullOrEmpty(searchTermTitle))
+            {
+                query = query.Where(eb => eb.Title.ToLower().Contains(searchTermTitle));
+            }
+
+            if (rarities != null && rarities.Any())
+            {
+                query = query
+                    .Where(eb => rarities.Contains(eb.BookRarity.Name.ToLower()));
+            }
+
+            if (geners != null && geners.Any())
+            {
+                query = query
+                    .Where(eb => eb.ElectronicBookGener.Any(x => geners.Contains(x.Gener.Name)));
+            }        
+
+            var totalBooks = query.Count();
 
             var books = query
-                .Skip((currentPage - 1) * 8)
-                .Take(ElectronicBookServiceModel.booksPerPage)
+                .Skip((currentPage - 1) * ListingElectronicBooksServiceModel.booksPerPage)
+                .Take(ListingElectronicBooksServiceModel.booksPerPage)
                 .ProjectTo<ElectronicBookServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
             return new ListingElectronicBooksServiceModel
             {
-                TotalPages = totalPages,
+                TotalBooks = totalBooks,
                 Books = books
             };
         }

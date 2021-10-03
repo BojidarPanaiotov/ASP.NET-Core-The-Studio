@@ -28,14 +28,14 @@
         [HttpGet]
         public IActionResult Index()
         {
-            var electronicBooks = this.electronicBookService.GetAll<ElectronicBookQueryModel>().ToList();
+            var electronicBooks = this.electronicBookService.GetElectronicBooksByFilters();
 
             var result = new SearchQueryModel()
             {
-                TotalBooks = electronicBooks.Count,
-                BookRarities = this.rarityService.GetAll<BookRarityQueryModel>().ToList(),
-                ElectronicBooks = electronicBooks.Take(8).ToList(),
-                Geners = this.generService.GetAll<GenerQueryModel>().OrderBy(x => x.Name).ToList()
+                TotalBooks = electronicBooks.TotalBooks,
+                BookRarities = this.rarityService.GetAll<BookRarityQueryModel>(),
+                ElectronicBooks = electronicBooks.Books,
+                Geners = this.generService.GetAll<GenerQueryModel>().OrderBy(x => x.Name)
             };
 
             return View(result);

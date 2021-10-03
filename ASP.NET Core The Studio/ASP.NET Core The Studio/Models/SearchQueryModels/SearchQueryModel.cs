@@ -2,15 +2,16 @@
 {
     using System.Collections.Generic;
     using ASP.NET_Core_The_Studio.Models.SearchQueryModels;
+    using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
 
     public class SearchQueryModel
     {
         public int TotalBooks { get; set; }
 
-        public List<BookRarityQueryModel> BookRarities { get; init; }
+        public IEnumerable<BookRarityQueryModel> BookRarities { get; init; }
 
-        public List<ElectronicBookQueryModel> ElectronicBooks { get; init; }
+        public IEnumerable<ElectronicBookServiceModel> ElectronicBooks { get; init; }
 
-        public List<GenerQueryModel> Geners { get; init; }
+        public IEnumerable<GenerQueryModel> Geners { get; init; }
     }
 }

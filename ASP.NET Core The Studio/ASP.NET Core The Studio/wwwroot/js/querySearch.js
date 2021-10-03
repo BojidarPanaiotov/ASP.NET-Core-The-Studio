@@ -88,7 +88,7 @@ function replaceWithQueryListBooks(wrapper, queryString) {
             });
 
             wrapper.innerHTML = booksHtml;
-            pagination.innerHTML = buildPaginationHtml(bookData.totalPages, Number(document.getElementById('currentPage').value));
+            pagination.innerHTML = buildPaginationHtml(bookData.totalBooks, Number(document.getElementById('currentPage').value));
             window.scrollTo(0, 0);
         });
 }

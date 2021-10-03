@@ -33,16 +33,7 @@
                     {
                         Id = x.Gener.Id,
                         Name = x.Gener.Name
-                    })));
-
-            CreateMap<ElectronicBook, ElectronicBookQueryModel>()
-                .ForMember(x => x.Geners,
-                opt => opt.MapFrom(
-                    src => src.ElectronicBookGener.Select(x => new GenerQueryModel
-                    {
-                        Id = x.Gener.Id,
-                        Name = x.Gener.Name
-                    })));
+                    }))); 
 
             CreateMap<ElectronicBook, ElectronicBookViewModel>()
                 .ForMember(x => x.Geners,

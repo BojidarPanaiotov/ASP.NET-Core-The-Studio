@@ -5,7 +5,9 @@
 
     public class ListingElectronicBooksServiceModel
     {
-        public int TotalPages { get; set; }
+        public const int booksPerPage = 8;
+
+        public int TotalBooks { get; set; }
 
         public IEnumerable<ElectronicBookServiceModel> Books { get; set; }
     }

@@ -27,6 +27,7 @@
             string bookRarityId,
             string description,
             string userId);
+
         void Update(
             ElectronicBookServiceModel electronicBook,
             string id);
@@ -35,10 +36,11 @@
 
         void Details(string id);
 
-        ListingElectronicBooksServiceModel GetElectronicBooksByFilters(BookSort sorting,
-             string searchTermTitle,
-             string[] rarities,
-             string[] geners,
-             int currentPage);
+        ListingElectronicBooksServiceModel GetElectronicBooksByFilters(
+            BookSort sorting = BookSort.None,
+            string searchTermTitle = null,
+            string[] rarities = null,
+            string[] geners = null,
+            int currentPage = 1);
     }
 }

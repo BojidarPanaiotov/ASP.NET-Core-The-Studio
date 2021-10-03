@@ -6,8 +6,6 @@
 
     public class ElectronicBookServiceModel
     {
-        public const int booksPerPage = 8;
-
         public string Id { get; set; }
 
         public string Title { get; set; }
