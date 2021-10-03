@@ -1,15 +1,15 @@
 ﻿namespace ASP.NET_Core_The_Studio.Controllers.Api
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
     using ASP.NET_Core_The_Studio.Models.Api;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
     using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.Services.Rarity;
-    using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     [Route("api/electronic-books")]
     [ApiController]
@@ -18,7 +18,8 @@
         private readonly IElectronicBookService electronicBookService;
         private readonly IRarityService rarityService;
 
-        public ElectronicBookApiController(IElectronicBookService electronicBookService,
+        public ElectronicBookApiController(
+            IElectronicBookService electronicBookService,
             IRarityService rarityService)
         {
             this.electronicBookService = electronicBookService;
@@ -52,6 +53,7 @@
 
             return books;
         }
+
         private static void BookLogger(List<ElectronicBookServiceModel> books)
         {
             foreach (var book in books)

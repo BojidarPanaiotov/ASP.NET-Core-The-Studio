@@ -1,15 +1,16 @@
 ﻿namespace ASP.NET_Core_The_Studio.Infrastructure.Extensions
 {
-    using ASP.NET_Core_The_Studio.Data;
-    using ASP.NET_Core_The_Studio.Data.Entities;
+    using System;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using ASP.NET_Core_The_Studio.Data;
+    using ASP.NET_Core_The_Studio.Data.Entities;
+
     using static ASP.NET_Core_The_Studio.Areas.Admin.AdminConstants;
 
     public static class ApplicationBuilderExtensions
@@ -28,12 +29,12 @@
             SeedElectronicBooks(context, serviceProvider);
             SeedGeners(context);
             SeedRandomBookGeners(context);
+
             return app;
         }
+
         private static void MigrateDatabase(ApplicationDbContext context)
-        {
-            context.Database.Migrate();
-        }
+            => context.Database.Migrate();
 
         private static void SeedAdministrator(IServiceProvider services)
         {
@@ -66,9 +67,9 @@
                 .GetAwaiter()
                 .GetResult();
         }
+
         private static void SeedBookRarity(ApplicationDbContext context)
         {
-
             if (context.BookRarities.Any())
             {
                 return;
@@ -85,6 +86,7 @@
 
             context.SaveChanges();
         }
+
         public static void SeedGeners(ApplicationDbContext context)
         {
             if (context.Geners.Any())
@@ -106,7 +108,10 @@
 
             context.SaveChanges();
         }
-        private static void SeedElectronicBooks(ApplicationDbContext context, IServiceProvider services)
+
+        private static void SeedElectronicBooks(
+            ApplicationDbContext context,
+            IServiceProvider services)
         {
             if (context.ElectronicBooks.Any())
             {
@@ -116,6 +121,7 @@
             var adminId = context.Users.Where(x => x.Email == "admin@test.com").FirstOrDefault().Id;
             var eBooks = new List<ElectronicBook>();
             var booksCount = 30;
+
             for (int i = 0; i < booksCount; i++)
             {
                 var eBook = new ElectronicBook
@@ -132,12 +138,14 @@
                     Description = "Lorem ipsumLorem ipsumLorem ipsumLorem ipsum",
                     UserId = adminId
                 };
+
                 eBooks.Add(eBook);
             }
 
             context.ElectronicBooks.AddRange(eBooks);
             context.SaveChanges();
         }
+
         private static void SeedRandomBookGeners(ApplicationDbContext context)
         {
             if (context.ElectronicBookGeners.Any())
@@ -146,6 +154,7 @@
             }
 
             var books = context.ElectronicBooks.ToList();
+
             for (int i = 0; i < books.Count; i++)
             {
                 var currentBook = books[i];
@@ -154,8 +163,8 @@
             }
 
             context.SaveChanges();
-
         }
+
         private static string SetRandomBookRarityId(ApplicationDbContext context)
         {
             var bookRarities = context.BookRarities.ToList();
@@ -165,6 +174,7 @@
 
             return bookRarities[randomBookRarityIndex].Id;
         }
+
         private static decimal SetRandomPriceInRange(int min, int max)
         {
             Random rnd = new Random();
@@ -172,11 +182,13 @@
 
             return rnd.Next(min, max);
         }
+
         private static int SetRandomCopySold()
         {
             Random rnd = new Random();
             return rnd.Next(0, 1000);
         }
+
         private static string SetRandomAuthor()
         {
             string[] authors = {
@@ -187,10 +199,13 @@
                 "Tiradjiq Ivanov",
                 "Bojidar Vodafon",
             };
+
             Random rnd = new Random();
             var radnomIndex = rnd.Next(0, authors.Length);
+
             return authors[radnomIndex];
         }
+
         private static string SetRandomTitle()
         {
             string[] titles = {
@@ -215,13 +230,12 @@
 
             return geners[radnomIndex];
         }
+
         private static ElectronicBookGener SetRandomGener(ApplicationDbContext context, ElectronicBook book)
-        {
-            return new ElectronicBookGener
+            => new ElectronicBookGener
             {
                 Gener = GetRandomGener(context),
                 ElectronicBook = book
             };
-        }
     }
 }

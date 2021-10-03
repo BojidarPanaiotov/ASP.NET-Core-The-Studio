@@ -1,8 +1,8 @@
 ﻿namespace ASP.NET_Core_The_Studio.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
     using ASP.NET_Core_The_Studio.Models.Feedbacks;
     using ASP.NET_Core_The_Studio.Services.EmailSender;
-    using Microsoft.AspNetCore.Mvc;
 
     public class ContactController : Controller
     {

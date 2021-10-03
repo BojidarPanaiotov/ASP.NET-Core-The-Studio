@@ -3,6 +3,7 @@
     public class GenerViewModel
     {
         public string Id { get; init; }
+
         public string Name { get; init; }
     }
 }

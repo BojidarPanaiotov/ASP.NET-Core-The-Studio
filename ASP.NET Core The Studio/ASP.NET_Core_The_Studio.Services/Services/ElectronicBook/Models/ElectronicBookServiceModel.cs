@@ -1,8 +1,8 @@
 ﻿namespace ASP.NET_Core_The_Studio.Services.ElectronicBook.Models
 {
-    using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
     using System;
     using System.Collections.Generic;
+    using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
 
     public class ElectronicBookServiceModel
     {
@@ -15,6 +15,7 @@
         public string Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
         public string Author { get; init; }
 
         public int Pages { get; set; }

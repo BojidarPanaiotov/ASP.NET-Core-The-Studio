@@ -1,8 +1,8 @@
 ﻿namespace ASP.NET_Core_The_Studio.Data
 {
-    using ASP.NET_Core_The_Studio.Data.Entities;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using ASP.NET_Core_The_Studio.Data.Entities;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -10,12 +10,19 @@
             : base(options)
         {
         }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; init; }
+
         public DbSet<ElectronicBook> ElectronicBooks { get; init; }
+
         public DbSet<BookRarity> BookRarities { get; init; }
+
         public DbSet<Gener> Geners { get; init; }
+
         public DbSet<ElectronicBookGener> ElectronicBookGeners { get; init; }
+
         public DbSet<ElectronicBookApplicationUser> ElectronicBookApplicationUsers { get; init; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

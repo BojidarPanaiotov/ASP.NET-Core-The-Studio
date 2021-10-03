@@ -15,6 +15,7 @@
         public int? CopySold { get; set; }
 
         public decimal Price { get; set; }
+
         public string BookRarityId { get; set; }
 
         public BookRarity BookRarity { get; set; }
@@ -22,7 +23,9 @@
         public byte[] BookCoverImage { get; set; }
 
         public byte[] Data { get; set; }
+
         public ICollection<ElectronicBookGener> ElectronicBookGener { get; init; }
+
         public ICollection<ElectronicBookApplicationUser> ApplicationUsers { get; init; }
     }
 }

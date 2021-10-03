@@ -26,13 +26,14 @@
                 client.Credentials = new NetworkCredential(from, receiverPassword);
                 client.EnableSsl = true;
             }
+
             try
             {
                 client.Send(message);
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 //TODO: save in log
                 return false;

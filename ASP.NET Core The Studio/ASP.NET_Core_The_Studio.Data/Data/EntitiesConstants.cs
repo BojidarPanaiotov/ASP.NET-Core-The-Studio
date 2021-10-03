@@ -8,6 +8,7 @@
             public const int TitleMaxLength = 110;
             public const int FileTypeMaxLength = 100;
         }
+
         public class ElectronicBook
         {
             public const int TitleMinLength = 3;

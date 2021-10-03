@@ -1,5 +1,13 @@
 namespace ASP.NET_Core_The_Studio
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     using ASP.NET_Core_The_Studio.Data;
     using ASP.NET_Core_The_Studio.Data.Entities;
     using ASP.NET_Core_The_Studio.Infrastructure.Extensions;
@@ -7,19 +15,11 @@ namespace ASP.NET_Core_The_Studio
     using ASP.NET_Core_The_Studio.Services.EmailSender;
     using ASP.NET_Core_The_Studio.Services.Services.Gener;
     using ASP.NET_Core_The_Studio.Services.Services.Rarity;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -64,6 +64,7 @@ namespace ASP.NET_Core_The_Studio
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

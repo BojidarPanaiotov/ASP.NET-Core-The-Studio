@@ -1,28 +1,23 @@
 ﻿namespace ASP.NET_Core_The_Studio.Controllers
 {
-    using ASP.NET_Core_The_Studio.Models;
-    using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using ASP.NET_Core_The_Studio.Models;
+
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
-        public IActionResult About()
-        {
-            return View();
-        }
+        public IActionResult About() => View();
+
         [HttpGet]
-        public IActionResult SendEmail()
-        {
-            return View();
-        }
+        public IActionResult SendEmail() => View();
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            => View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
     }
 }

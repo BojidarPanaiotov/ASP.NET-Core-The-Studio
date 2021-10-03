@@ -1,21 +1,23 @@
 ﻿namespace ASP.NET_Core_The_Studio.Services.ElectronicBook
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using ASP.NET_Core_The_Studio.Data;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models.Enums;
     using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+
     using _ElectronicBook = Data.Entities.ElectronicBook;
 
     public class ElectronicBookService : IElectronicBookService
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+
         public ElectronicBookService(ApplicationDbContext context,
             IMapper mapper)
         {
@@ -129,6 +131,7 @@
             {
                 query = query.Where(eb => eb.Title.ToLower().Contains(searchTermTitle));
             }
+
             if (sorting != BookSort.None)
             {
                 query = sorting switch

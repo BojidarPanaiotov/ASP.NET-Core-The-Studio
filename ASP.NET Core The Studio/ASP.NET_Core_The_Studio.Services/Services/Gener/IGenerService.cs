@@ -4,7 +4,9 @@
     public interface IGenerService
     {
         IEnumerable<T> GetAll<T>();
+
         T GetByName<T>(string name);
+
         T GetById<T>(string id);
     }
 }

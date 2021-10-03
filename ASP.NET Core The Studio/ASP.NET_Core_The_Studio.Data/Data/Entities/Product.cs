@@ -17,7 +17,9 @@
 
         [Required]
         public DateTime CreatedOn { get; set; }
+
         public string UserId { get; init; }
+
         public ApplicationUser User { get; init; }
     }
 }

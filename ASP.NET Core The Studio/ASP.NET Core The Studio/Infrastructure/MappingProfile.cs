@@ -1,15 +1,16 @@
 ﻿namespace ASP.NET_Core_The_Studio.Infrastructure
 {
+    using System.Linq;
+    using AutoMapper;
     using ASP.NET_Core_The_Studio.Areas.Admin.Models;
-    using ASP.NET_Core_The_Studio.Areas.Admin.Models.Books;
     using ASP.NET_Core_The_Studio.Data.Entities;
     using ASP.NET_Core_The_Studio.Models;
+    using ASP.NET_Core_The_Studio.Models.Api;
     using ASP.NET_Core_The_Studio.Models.SearchQueryModels;
     using ASP.NET_Core_The_Studio.Models.ViewModels;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook.Models;
     using ASP.NET_Core_The_Studio.Services.Services.ElectronicBook.Models;
-    using AutoMapper;
-    using System.Linq;
+
     public class MappingProfile : Profile
     {
         public MappingProfile()
@@ -23,12 +24,12 @@
                     {
                         Id = x.Gener.Id,
                         Name = x.Gener.Name
-                    }))); ;
+                    })));
 
             CreateMap<ElectronicBook, ElectronicBookApiModel>()
                 .ForMember(x => x.Geners,
                 opt => opt.MapFrom(
-                    src => src.ElectronicBookGener.Select(x => new BookGenerApiModel
+                    src => src.ElectronicBookGener.Select(x => new GenerApiModel
                     {
                         Id = x.Gener.Id,
                         Name = x.Gener.Name
@@ -42,6 +43,7 @@
                         Id = x.Gener.Id,
                         Name = x.Gener.Name
                     })));
+
             CreateMap<ElectronicBook, ElectronicBookViewModel>()
                 .ForMember(x => x.Geners,
                 opt => opt.MapFrom(
@@ -52,10 +54,9 @@
                     })));
 
             CreateMap<BookRarity, BookRarityQueryModel>();
-            CreateMap<BookRarity, BookRarityApiModel>();
+            CreateMap<BookRarity, RarityApiModel>();
 
             CreateMap<Gener, GenerQueryModel>();
-
         }
     }
 }

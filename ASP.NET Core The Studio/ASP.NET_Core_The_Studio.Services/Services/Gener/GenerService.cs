@@ -1,10 +1,10 @@
 ﻿namespace ASP.NET_Core_The_Studio.Services.Services.Gener
 {
-    using ASP.NET_Core_The_Studio.Data;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using System.Collections.Generic;
     using System.Linq;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using ASP.NET_Core_The_Studio.Data;
 
     public class GenerService : IGenerService
     {

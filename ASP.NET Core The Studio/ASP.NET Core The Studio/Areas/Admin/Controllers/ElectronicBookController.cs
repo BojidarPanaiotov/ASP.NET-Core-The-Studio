@@ -1,37 +1,42 @@
 ﻿namespace ASP.NET_Core_The_Studio.Areas.Admin.Controllers
 {
-    using ASP.NET_Core_The_Studio.Areas.Admin.Models;
+    using System.Linq;
+    using System.IO;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
     using ASP.NET_Core_The_Studio.Data;
     using ASP.NET_Core_The_Studio.Infrastructure.Extensions;
     using ASP.NET_Core_The_Studio.Services.ElectronicBook;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using System.IO;
-    using System.Linq;
+    using ASP.NET_Core_The_Studio.Areas.Admin.Models;
+
     public class ElectronicBookController : AdminController
     {
         private readonly ApplicationDbContext context;
         private readonly IElectronicBookService electronicBookService;
-        public ElectronicBookController(ApplicationDbContext context,
+
+        public ElectronicBookController(
+            ApplicationDbContext context,
             IElectronicBookService electronicBookService)
         {
             this.context = context;
             this.electronicBookService = electronicBookService;
         }
+
         [Authorize]
         [HttpGet]
         public IActionResult Create()
-        {
-            var categories = context.BookRarities.ToList();
-            return View(new ElectronicBookFormModel()
+            => View(new ElectronicBookFormModel()
             {
-                Categories = categories
+                Categories = context.BookRarities.ToList()
             });
-        }
+
         [Authorize]
         [HttpPost]
-        public IActionResult Create(ElectronicBookFormModel eBook, IFormFile bookData, IFormFile bookCoverImage)
+        public IActionResult Create(
+            ElectronicBookFormModel eBook,
+            IFormFile bookData,
+            IFormFile bookCoverImage)
         {
             //TODO: Restrict only for PDF files (or other book formats included)
             //TODO: Think for a way to get pages count from the book
@@ -54,9 +59,11 @@
                 eBook.Description,
                 this.User.Id());
 
-            return RedirectToAction(nameof(ElectronicBookController.All),
+            return RedirectToAction(
+                nameof(ElectronicBookController.All),
                 nameof(ElectronicBookController).Replace("Controller", ""));
         }
+
         [Authorize]
         [HttpGet]
         public IActionResult All()
@@ -75,13 +82,15 @@
                 FileDownloadName = $"TheStudio_{electronicBook.Title}.pdf"
             };
         }
+
         [Authorize]
         [HttpGet]
         public IActionResult Delete(string id)
         {
             this.electronicBookService.Delete(id);
 
-            return RedirectToAction(nameof(ElectronicBookController.All),
+            return RedirectToAction(
+                nameof(ElectronicBookController.All),
                 nameof(ElectronicBookController).Replace("Controller", ""));
         }
     }
