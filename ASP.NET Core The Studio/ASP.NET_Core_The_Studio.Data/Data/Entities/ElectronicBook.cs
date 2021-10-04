@@ -24,8 +24,8 @@
 
         public byte[] Data { get; set; }
 
-        public ICollection<ElectronicBookGener> ElectronicBookGener { get; init; }
+        public ICollection<ElectronicBookGener> ElectronicBookGener { get; init; } = new HashSet<ElectronicBookGener>();
 
-        public ICollection<ElectronicBookApplicationUser> ApplicationUsers { get; init; }
+        public ICollection<ElectronicBookApplicationUser> ApplicationUsers { get; init; } = new HashSet<ElectronicBookApplicationUser>();
     }
 }

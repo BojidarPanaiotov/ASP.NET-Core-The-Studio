@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using ASP.NET_Core_The_Studio.Data.Entities;
+    using ASP.NET_Core_The_Studio.Data.Data.Entities;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -22,6 +23,10 @@
         public DbSet<ElectronicBookGener> ElectronicBookGeners { get; init; }
 
         public DbSet<ElectronicBookApplicationUser> ElectronicBookApplicationUsers { get; init; }
+
+        public DbSet<Comment> Comments { get; init; }
+
+        public DbSet<Reply> Replys { get; init; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +59,11 @@
                 .HasOne(eb => eb.ApplicationUser)
                 .WithMany(x => x.ElectronicBooks)
                 .HasForeignKey(bc => bc.ApplicationUserId);
+
+            modelBuilder.Entity<Comment>()
+                .HasMany(x => x.Replys)
+                .WithOne(x => x.Comment)
+                .HasForeignKey(x => x.CommentId);
         }
     }
 }

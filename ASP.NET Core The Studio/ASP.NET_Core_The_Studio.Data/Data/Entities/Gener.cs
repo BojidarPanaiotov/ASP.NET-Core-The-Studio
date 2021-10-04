@@ -9,6 +9,6 @@
 
         public string Name { get; init; }
 
-        public ICollection<ElectronicBookGener> ElectronicBookGener { get; init; }
+        public ICollection<ElectronicBookGener> ElectronicBookGener { get; init; } = new HashSet<ElectronicBookGener>();
     }
 }

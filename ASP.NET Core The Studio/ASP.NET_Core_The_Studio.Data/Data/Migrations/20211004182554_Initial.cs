@@ -211,6 +211,33 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Likes = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ElectronicBookId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_ElectronicBooks_ElectronicBookId",
+                        column: x => x.ElectronicBookId,
+                        principalTable: "ElectronicBooks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ElectronicBookApplicationUsers",
                 columns: table => new
                 {
@@ -258,6 +285,33 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Replys",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Likes = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CommentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Replys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Replys_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Replys_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -298,6 +352,16 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_ApplicationUserId",
+                table: "Comments",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ElectronicBookId",
+                table: "Comments",
+                column: "ElectronicBookId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ElectronicBookApplicationUsers_ApplicationUserId",
                 table: "ElectronicBookApplicationUsers",
                 column: "ApplicationUserId");
@@ -316,6 +380,16 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                 name: "IX_ElectronicBooks_UserId",
                 table: "ElectronicBooks",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replys_ApplicationUserId",
+                table: "Replys",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Replys_CommentId",
+                table: "Replys",
+                column: "CommentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -342,13 +416,19 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                 name: "ElectronicBookGeners");
 
             migrationBuilder.DropTable(
+                name: "Replys");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ElectronicBooks");
+                name: "Geners");
 
             migrationBuilder.DropTable(
-                name: "Geners");
+                name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "ElectronicBooks");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

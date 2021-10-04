@@ -19,6 +19,62 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Data.Entities.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ElectronicBookId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ElectronicBookId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Data.Entities.Reply", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("Replys");
+                });
+
             modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -325,6 +381,36 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Data.Entities.Comment", b =>
+                {
+                    b.HasOne("ASP.NET_Core_The_Studio.Data.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("ASP.NET_Core_The_Studio.Data.Entities.ElectronicBook", "ElectronicBook")
+                        .WithMany()
+                        .HasForeignKey("ElectronicBookId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("ElectronicBook");
+                });
+
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Data.Entities.Reply", b =>
+                {
+                    b.HasOne("ASP.NET_Core_The_Studio.Data.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("ASP.NET_Core_The_Studio.Data.Data.Entities.Comment", "Comment")
+                        .WithMany("Replys")
+                        .HasForeignKey("CommentId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Comment");
+                });
+
             modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.ElectronicBook", b =>
                 {
                     b.HasOne("ASP.NET_Core_The_Studio.Data.Entities.BookRarity", "BookRarity")
@@ -429,8 +515,15 @@ namespace ASP.NET_Core_The_Studio.Data.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Data.Entities.Comment", b =>
+                {
+                    b.Navigation("Replys");
+                });
+
             modelBuilder.Entity("ASP.NET_Core_The_Studio.Data.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("ElectronicBooks");
                 });
 
