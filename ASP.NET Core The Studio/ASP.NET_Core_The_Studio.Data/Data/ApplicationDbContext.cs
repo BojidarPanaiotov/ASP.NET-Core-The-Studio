@@ -59,11 +59,6 @@
                 .HasOne(eb => eb.ApplicationUser)
                 .WithMany(x => x.ElectronicBooks)
                 .HasForeignKey(bc => bc.ApplicationUserId);
-
-            modelBuilder.Entity<Comment>()
-                .HasMany(x => x.Replys)
-                .WithOne(x => x.Comment)
-                .HasForeignKey(x => x.CommentId);
         }
     }
 }
