@@ -1,87 +1,112 @@
 ﻿@model ElectronicBookServiceModel
 
-    <link rel="stylesheet" href="~/css/comment.css" />
+<link rel="stylesheet" href="~/css/comment.css" />
 
-    <blockquote class="blockquote">
-        <h1 class="mb-0">@Model.Title</h1>
-        <footer class="blockquote-footer">written by <cite title="Source Title">@Model.Author</cite></footer>
-    </blockquote>
-    <div class="row mr-5">
-        <div class="col-md-8">
-            <img src="https://m.media-amazon.com/images/I/41gS+bWw3XL.jpg" class="img-fluid" alt="Responsive image">
-        </div>
-        <div class="col-md-4 border border-secondary mx-auto">
-            <h3 class="my-3">Description:</h3>
-            <h3 class="my-3">@Model.Description</h3>
-            <p style="word-wrap:break-word"></p>
-            <h3 class="my-3">Other Details</h3>
-            <ul>
-                <li>
-                    Pages: @Model.Pages
-                </li>
-                <li>
-                    Rarity: @Model.BookRarityName
-                </li>
-                <li>
-                    Gener: @string.Join(',', Model.Geners.Select(x => x.Name))
-                </li>
-                <li>
-                    CopySold: @Model.CopySold
-                </li>
-                <li>
-                    Published On: @Model.CreatedOn.ToShortDateString()
-                </li>
-            </ul>
-        </div>
-        <div class="display-4 mt-4">Price: BGN @Model.Price</div>
+<blockquote class="blockquote">
+    <h1 class="mb-0">@Model.Title</h1>
+    <footer class="blockquote-footer">written by <cite title="Source Title">@Model.Author</cite></footer>
+</blockquote>
+<div class="row mr-5">
+    <div class="col-md-8">
+        <img src="https://m.media-amazon.com/images/I/41gS+bWw3XL.jpg" class="img-fluid" alt="Responsive image">
     </div>
+    <div class="col-md-4 border border-secondary mx-auto">
+        <h3 class="my-3">Description:</h3>
+        <h3 class="my-3">@Model.Description</h3>
+        <p style="word-wrap:break-word"></p>
+        <h3 class="my-3">Other Details</h3>
+        <ul>
+            <li>
+                Pages: @Model.Pages
+            </li>
+            <li>
+                Rarity: @Model.BookRarityName
+            </li>
+            <li>
+                Gener: @string.Join(',', Model.Geners.Select(x => x.Name))
+            </li>
+            <li>
+                CopySold: @Model.CopySold
+            </li>
+            <li>
+                Published On: @Model.CreatedOn.ToShortDateString()
+            </li>
+        </ul>
+    </div>
+    <div class="display-4 mt-4">Price: BGN @Model.Price</div>
+</div>
 
-    <div class="container mt-5 mb-5">
-        <div class="d-flex row">
-            <div class="coment-bottom bg-white p-2 px-4">
-                <form method="post">
-                    <div class="d-flex flex-row add-comment-section mt-4 mb-4">
-                        <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
-                        <input type="text" class="form-control mr-3" placeholder="Add comment">
-                        <button class="btn btn-primary" type="button">Comment</button>
-                    </div>
-                </form>
-                <div class="commented-section mt-2">
-                    <div class="d-flex flex-row align-items-center commented-user">
-                        <h5 class="mr-2">Corey oates</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">4 hours ago</span>
-                    </div>
-                    <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
-                    <div class="reply-section">
-                        <div class="d-flex flex-row align-items-center voting-icons">
-                            <i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2">10</span><span class="dot ml-2"></span>
-                            <h6 class="ml-2 mt-1">Reply</h6>
-                        </div>
+<div class="container mt-5 mb-5">
+    <div class="d-flex row">
+        <div class="coment-bottom bg-white p-2 px-4">
+            <form method="post">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                    <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+                    <input id="content" type="text" class="form-control mr-3" placeholder="Add comment">
+                    <button id="commentBtn" class="btn btn-primary" type="button">Comment</button>
+                </div>
+            </form>
+            <div class="commented-section mt-2">
+                <div class="d-flex flex-row align-items-center commented-user">
+                    <h5 class="mr-2">Corey oates</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">4 hours ago</span>
+                </div>
+                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
+                <div class="reply-section">
+                    <div class="d-flex flex-row align-items-center voting-icons">
+                        <i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2">10</span><span class="dot ml-2"></span>
+                        <h6 class="ml-2 mt-1">Reply</h6>
                     </div>
                 </div>
-                <div class="commented-section mt-2">
-                    <div class="d-flex flex-row align-items-center commented-user">
-                        <h5 class="mr-2">Samoya Johns</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">5 hours ago</span>
-                    </div>
-                    <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</span></div>
-                    <div class="reply-section">
-                        <div class="d-flex flex-row align-items-center voting-icons">
-                            <i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2">15</span><span class="dot ml-2"></span>
-                            <h6 class="ml-2 mt-1">Reply</h6>
-                        </div>
+            </div>
+            <div class="commented-section mt-2">
+                <div class="d-flex flex-row align-items-center commented-user">
+                    <h5 class="mr-2">Samoya Johns</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">5 hours ago</span>
+                </div>
+                <div class="comment-text-sm"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..</span></div>
+                <div class="reply-section">
+                    <div class="d-flex flex-row align-items-center voting-icons">
+                        <i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2">15</span><span class="dot ml-2"></span>
+                        <h6 class="ml-2 mt-1">Reply</h6>
                     </div>
                 </div>
-                <div class="commented-section mt-2">
-                    <div class="d-flex flex-row align-items-center commented-user">
-                        <h5 class="mr-2">Makhaya andrew</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">10 hours ago</span>
-                    </div>
-                    <div class="comment-text-sm"><span>Nunc sed id semper risus in hendrerit gravida rutrum. Non odio euismod lacinia at quis risus sed. Commodo ullamcorper a lacus vestibulum sed arcu non odio euismod. Enim facilisis gravida neque convallis a. In mollis nunc sed id. Adipiscing elit pellentesque habitant morbi tristique senectus et netus. Ultrices mi tempus imperdiet nulla malesuada pellentesque.</span></div>
-                    <div class="reply-section">
-                        <div class="d-flex flex-row align-items-center voting-icons">
-                            <i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2">25</span><span class="dot ml-2"></span>
-                            <h6 class="ml-2 mt-1">Reply</h6>
-                        </div>
+            </div>
+            <div class="commented-section mt-2">
+                <div class="d-flex flex-row align-items-center commented-user">
+                    <h5 class="mr-2">Makhaya andrew</h5><span class="dot mb-1"></span><span class="mb-1 ml-2">10 hours ago</span>
+                </div>
+                <div class="comment-text-sm"><span>Nunc sed id semper risus in hendrerit gravida rutrum. Non odio euismod lacinia at quis risus sed. Commodo ullamcorper a lacus vestibulum sed arcu non odio euismod. Enim facilisis gravida neque convallis a. In mollis nunc sed id. Adipiscing elit pellentesque habitant morbi tristique senectus et netus. Ultrices mi tempus imperdiet nulla malesuada pellentesque.</span></div>
+                <div class="reply-section">
+                    <div class="d-flex flex-row align-items-center voting-icons">
+                        <i class="fa fa-sort-up fa-2x mt-3 hit-voting"></i><i class="fa fa-sort-down fa-2x mb-3 hit-voting"></i><span class="ml-2">25</span><span class="dot ml-2"></span>
+                        <h6 class="ml-2 mt-1">Reply</h6>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<script type="text/javascript">
+    document.getElementById("commentBtn")
+        .addEventListener("click", addComment);
+
+    function addComment() {
+        bookId = "@Model.Id";
+        content = document.getElementById("content").value;
+
+        let data = {
+            bookId: bookId,
+            content: content
+        };
+
+        console.log(data);
+
+        fetch("@Url.Action("Add", "Comment")", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+            });
+    };
+</script>

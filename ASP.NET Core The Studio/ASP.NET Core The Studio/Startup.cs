@@ -15,6 +15,7 @@ namespace ASP.NET_Core_The_Studio
     using ASP.NET_Core_The_Studio.Services.EmailSender;
     using ASP.NET_Core_The_Studio.Services.Services.Gener;
     using ASP.NET_Core_The_Studio.Services.Services.Rarity;
+    using ASP.NET_Core_The_Studio.Services.Services.Comment;
 
     public class Startup
     {
@@ -48,6 +49,7 @@ namespace ASP.NET_Core_The_Studio
             services.AddTransient<IRarityService, RarityService>();
             services.AddTransient<IGenerService, GenerService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ICommentService, CommentService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

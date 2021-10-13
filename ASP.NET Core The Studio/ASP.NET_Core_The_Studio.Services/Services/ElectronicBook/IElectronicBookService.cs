@@ -42,5 +42,7 @@
             string[] rarities = null,
             string[] geners = null,
             int currentPage = 1);
+
+        bool IsExist(string id);
     }
 }

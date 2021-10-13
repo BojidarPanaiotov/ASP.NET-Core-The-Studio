@@ -54,6 +54,7 @@
             return books;
         }
 
+        //TODO: exported in to service?
         private static void BookLogger(List<ElectronicBookServiceModel> books)
         {
             foreach (var book in books)

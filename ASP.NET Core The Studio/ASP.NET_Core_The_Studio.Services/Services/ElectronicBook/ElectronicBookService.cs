@@ -171,5 +171,10 @@
                 Books = books
             };
         }
+
+        public bool IsExist(string id)
+            => this.context
+                .ElectronicBooks
+                .Any(eb => eb.Id == id);
     }
 }
